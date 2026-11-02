@@ -1,0 +1,10 @@
+{
+  "synthetic": true,
+  "prior_approvals": [
+    {"requester": "USR-UK-002", "entitlement": "market-data-write", "age_days": 191, "manager_confirmed": true, "app_owner_confirmed": true, "source_request_id": "SYN-GRANT-002"},
+    {"requester": "USR-US-003", "entitlement": "order-router-read", "age_days": 12, "manager_confirmed": true, "app_owner_confirmed": true, "source_request_id": "SYN-GRANT-003"},
+    {"requester": "USR-UK-008", "entitlement": "payments-gateway-deploy", "age_days": 0, "manager_confirmed": true, "app_owner_confirmed": false, "source_request_id": "RQ-008"},
+    {"requester": "USR-US-009", "entitlement": "prod-db-admin", "age_days": 120, "manager_confirmed": true, "app_owner_confirmed": true, "source_request_id": "SYN-GRANT-009"},
+    {"requester": "USR-IN-010", "entitlement": "market-data-write", "age_days": 9, "manager_confirmed": true, "app_owner_confirmed": true, "source_request_id": "SYN-GRANT-010"}
+  ]
+}

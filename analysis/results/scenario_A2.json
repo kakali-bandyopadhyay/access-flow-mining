@@ -1,0 +1,80 @@
+{
+  "synthetic": true,
+  "scenario": "A2",
+  "case_count": 2000,
+  "intended_classification": "APPROVER-BOUND",
+  "classified": "APPROVER-BOUND",
+  "margin": 4.021267557523499,
+  "approver_share": 0.7751636294147489,
+  "handoff_share": 0.192765991898369,
+  "doer_share": 0.03207037868688205,
+  "wait_share": 0.9623741161731642,
+  "cycle_bh_mean": 45.63916416666667,
+  "cycle_bh_median": 35.39055555555556,
+  "cycle_bh_p90": 79.50113888888896,
+  "cycle_bh_p95": 115.96451388888886,
+  "mean_days": 8.060621377314815,
+  "median_days": 6.339224537037037,
+  "p90_days": 13.97988078703704,
+  "p95_days": 20.17682291666665,
+  "loop_rate": 0.18,
+  "mean_loops_per_case": 0.21,
+  "breach_rate": 0.2935,
+  "defect_rate": 0.4065,
+  "dpmo": 406500.0,
+  "sigma_before": 1.736557621780165,
+  "after_defect_rate": 0.361324,
+  "after_dpmo": 361324.0,
+  "sigma_after": 1.8549220353109477,
+  "top_three_diagnostics": [
+    {
+      "step": 5,
+      "activity": "Entitlement owner approval",
+      "component": "queue",
+      "hours": 60875.39277777778,
+      "share": 0.6669205482759383
+    },
+    {
+      "step": 3,
+      "activity": "Line manager approval",
+      "component": "queue",
+      "hours": 9373.150277777779,
+      "share": 0.10268757599885689
+    },
+    {
+      "step": 6,
+      "activity": "Provision access",
+      "component": "queue",
+      "hours": 2490.0544444444445,
+      "share": 0.0272797989392529
+    }
+  ],
+  "return_point_pareto": [
+    {
+      "scenario": "A2",
+      "rank": 1,
+      "return_point": 2,
+      "loop_count": 344,
+      "share": 0.819047619047619,
+      "cumulative_share": 0.819047619047619
+    },
+    {
+      "scenario": "A2",
+      "rank": 2,
+      "return_point": 3,
+      "loop_count": 48,
+      "share": 0.11428571428571428,
+      "cumulative_share": 0.9333333333333333
+    },
+    {
+      "scenario": "A2",
+      "rank": 3,
+      "return_point": 5,
+      "loop_count": 28,
+      "share": 0.06666666666666667,
+      "cumulative_share": 1.0
+    }
+  ],
+  "top5_variant_coverage": 0.972,
+  "conformance_rate_exact_path": 0.774
+}

@@ -1,0 +1,206 @@
+{
+  "synthetic": true,
+  "unit": "business hours per case, mean by step",
+  "scenarios": {
+    "A1": [
+      {
+        "step": 1,
+        "activity": "Submit request",
+        "mean_wait_bh": 0.4661605555555556,
+        "mean_touch_bh": 0.05649694444444445
+      },
+      {
+        "step": 2,
+        "activity": "Validate request",
+        "mean_wait_bh": 1.5216315277777779,
+        "mean_touch_bh": 0.21111069444444444
+      },
+      {
+        "step": 3,
+        "activity": "Line manager approval",
+        "mean_wait_bh": 5.238594722222222,
+        "mean_touch_bh": 0.10234569444444444
+      },
+      {
+        "step": 4,
+        "activity": "SoD / access-risk check",
+        "mean_wait_bh": 1.48002875,
+        "mean_touch_bh": 0.25154708333333337
+      },
+      {
+        "step": 5,
+        "activity": "Entitlement owner approval",
+        "mean_wait_bh": 29.83156986111111,
+        "mean_touch_bh": 0.1503890277777778
+      },
+      {
+        "step": 6,
+        "activity": "Provision access",
+        "mean_wait_bh": 1.808855,
+        "mean_touch_bh": 0.7161606944444444
+      },
+      {
+        "step": 7,
+        "activity": "Confirm access works",
+        "mean_wait_bh": 0.7517020833333333,
+        "mean_touch_bh": 0.10170111111111112
+      },
+      {
+        "step": 8,
+        "activity": "Close request",
+        "mean_wait_bh": 0.7274219444444444,
+        "mean_touch_bh": 0.04898902777777778
+      }
+    ],
+    "A2": [
+      {
+        "step": 1,
+        "activity": "Submit request",
+        "mean_wait_bh": 0.6371784722222222,
+        "mean_touch_bh": 0.07577305555555555
+      },
+      {
+        "step": 2,
+        "activity": "Validate request",
+        "mean_wait_bh": 1.7790755555555557,
+        "mean_touch_bh": 0.24825
+      },
+      {
+        "step": 3,
+        "activity": "Line manager approval",
+        "mean_wait_bh": 5.33017625,
+        "mean_touch_bh": 0.10168041666666668
+      },
+      {
+        "step": 4,
+        "activity": "SoD / access-risk check",
+        "mean_wait_bh": 1.4951555555555556,
+        "mean_touch_bh": 0.250415
+      },
+      {
+        "step": 5,
+        "activity": "Entitlement owner approval",
+        "mean_wait_bh": 31.281045,
+        "mean_touch_bh": 0.15186819444444444
+      },
+      {
+        "step": 6,
+        "activity": "Provision access",
+        "mean_wait_bh": 1.8870088888888887,
+        "mean_touch_bh": 0.7334683333333334
+      },
+      {
+        "step": 7,
+        "activity": "Confirm access works",
+        "mean_wait_bh": 0.7755809722222222,
+        "mean_touch_bh": 0.10534930555555556
+      },
+      {
+        "step": 8,
+        "activity": "Close request",
+        "mean_wait_bh": 0.7367295833333334,
+        "mean_touch_bh": 0.05040958333333333
+      }
+    ],
+    "B1": [
+      {
+        "step": 1,
+        "activity": "Submit request",
+        "mean_wait_bh": 0.4010177777777778,
+        "mean_touch_bh": 0.05603263888888889
+      },
+      {
+        "step": 2,
+        "activity": "Validate request",
+        "mean_wait_bh": 3.302532361111111,
+        "mean_touch_bh": 0.21130833333333335
+      },
+      {
+        "step": 3,
+        "activity": "Line manager approval",
+        "mean_wait_bh": 6.6613556944444445,
+        "mean_touch_bh": 0.10149402777777777
+      },
+      {
+        "step": 4,
+        "activity": "SoD / access-risk check",
+        "mean_wait_bh": 2.976795416666667,
+        "mean_touch_bh": 0.2523081944444444
+      },
+      {
+        "step": 5,
+        "activity": "Entitlement owner approval",
+        "mean_wait_bh": 17.99880208333333,
+        "mean_touch_bh": 0.14891805555555557
+      },
+      {
+        "step": 6,
+        "activity": "Provision access",
+        "mean_wait_bh": 5.011198055555556,
+        "mean_touch_bh": 0.7178141666666666
+      },
+      {
+        "step": 7,
+        "activity": "Confirm access works",
+        "mean_wait_bh": 4.367968333333334,
+        "mean_touch_bh": 0.10074375
+      },
+      {
+        "step": 8,
+        "activity": "Close request",
+        "mean_wait_bh": 1.7735041666666667,
+        "mean_touch_bh": 0.05017916666666667
+      }
+    ],
+    "B2": [
+      {
+        "step": 1,
+        "activity": "Submit request",
+        "mean_wait_bh": 0.5543019444444444,
+        "mean_touch_bh": 0.07696722222222221
+      },
+      {
+        "step": 2,
+        "activity": "Validate request",
+        "mean_wait_bh": 3.6819811111111114,
+        "mean_touch_bh": 0.2520648611111111
+      },
+      {
+        "step": 3,
+        "activity": "Line manager approval",
+        "mean_wait_bh": 6.6016475,
+        "mean_touch_bh": 0.10485305555555556
+      },
+      {
+        "step": 4,
+        "activity": "SoD / access-risk check",
+        "mean_wait_bh": 2.9579786111111113,
+        "mean_touch_bh": 0.25300930555555556
+      },
+      {
+        "step": 5,
+        "activity": "Entitlement owner approval",
+        "mean_wait_bh": 17.077400416666666,
+        "mean_touch_bh": 0.15070444444444445
+      },
+      {
+        "step": 6,
+        "activity": "Provision access",
+        "mean_wait_bh": 5.209320277777778,
+        "mean_touch_bh": 0.7494779166666667
+      },
+      {
+        "step": 7,
+        "activity": "Confirm access works",
+        "mean_wait_bh": 4.491086805555556,
+        "mean_touch_bh": 0.10687180555555556
+      },
+      {
+        "step": 8,
+        "activity": "Close request",
+        "mean_wait_bh": 1.737725,
+        "mean_touch_bh": 0.049999444444444444
+      }
+    ]
+  }
+}

@@ -1,0 +1,80 @@
+{
+  "synthetic": true,
+  "scenario": "A1",
+  "case_count": 2000,
+  "intended_classification": "APPROVER-BOUND",
+  "classified": "APPROVER-BOUND",
+  "margin": 4.109527601495121,
+  "approver_share": 0.7786400245046847,
+  "handoff_share": 0.1894719052918397,
+  "doer_share": 0.031888070203475505,
+  "wait_share": 0.9622972182084114,
+  "cycle_bh_mean": 43.464704722222216,
+  "cycle_bh_median": 33.84680555555556,
+  "cycle_bh_p90": 77.4744444444445,
+  "cycle_bh_p95": 117.06381944444442,
+  "mean_days": 7.573784293981483,
+  "median_days": 6.034623842592593,
+  "p90_days": 13.775940972222225,
+  "p95_days": 20.28373032407407,
+  "loop_rate": 0.04,
+  "mean_loops_per_case": 0.045,
+  "breach_rate": 0.2755,
+  "defect_rate": 0.303,
+  "dpmo": 303000.0,
+  "sigma_before": 2.0157915570468274,
+  "after_defect_rate": null,
+  "after_dpmo": null,
+  "sigma_after": null,
+  "top_three_diagnostics": [
+    {
+      "step": 5,
+      "activity": "Entitlement owner approval",
+      "component": "queue",
+      "hours": 57976.09166666667,
+      "share": 0.6669329981324502
+    },
+    {
+      "step": 3,
+      "activity": "Line manager approval",
+      "component": "queue",
+      "hours": 9205.156388888889,
+      "share": 0.10589231478412141
+    },
+    {
+      "step": 6,
+      "activity": "Provision access",
+      "component": "queue",
+      "hours": 2355.113611111111,
+      "share": 0.0270922536591743
+    }
+  ],
+  "return_point_pareto": [
+    {
+      "scenario": "A1",
+      "rank": 1,
+      "return_point": 2,
+      "loop_count": 63,
+      "share": 0.7,
+      "cumulative_share": 0.7
+    },
+    {
+      "scenario": "A1",
+      "rank": 2,
+      "return_point": 3,
+      "loop_count": 17,
+      "share": 0.18888888888888888,
+      "cumulative_share": 0.8888888888888888
+    },
+    {
+      "scenario": "A1",
+      "rank": 3,
+      "return_point": 5,
+      "loop_count": 10,
+      "share": 0.1111111111111111,
+      "cumulative_share": 1.0
+    }
+  ],
+  "top5_variant_coverage": 0.9925,
+  "conformance_rate_exact_path": 0.9445
+}

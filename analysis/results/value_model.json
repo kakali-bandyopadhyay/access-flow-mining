@@ -1,0 +1,423 @@
+{
+  "synthetic": true,
+  "currency": "USD",
+  "annual_cases": 4000,
+  "hourly_value_usd": 22.0,
+  "baseline_coverage": 0.7,
+  "annual_savings": {
+    "direct_handling": {
+      "hours_per_year": 560.0,
+      "value_usd_per_year": 12320.0
+    },
+    "rework_avoided": {
+      "hours_per_year": 123.19999999999999,
+      "value_usd_per_year": 2710.3999999999996
+    },
+    "total": {
+      "hours_per_year": 683.2,
+      "value_usd_per_year": 15030.400000000001
+    }
+  },
+  "ramp": {
+    "build_cost_usd": 8000.0,
+    "run_cost_usd_per_month": 125.0,
+    "annual_discount_rate": 0.12,
+    "monthly_discount_rate": 0.009488792934583046,
+    "payback_months": 9.86477688185506,
+    "npv_36_months_usd": 21926.738826523913,
+    "cash_flows": [
+      {
+        "month": 1,
+        "adoption": 0.6,
+        "gross_savings_usd": 751.5200000000001,
+        "run_cost_usd": 125.0,
+        "net_cash_flow_usd": 626.5200000000001,
+        "cumulative_net_value_usd": -7373.48
+      },
+      {
+        "month": 2,
+        "adoption": 0.6,
+        "gross_savings_usd": 751.5200000000001,
+        "run_cost_usd": 125.0,
+        "net_cash_flow_usd": 626.5200000000001,
+        "cumulative_net_value_usd": -6746.959999999999
+      },
+      {
+        "month": 3,
+        "adoption": 0.6,
+        "gross_savings_usd": 751.5200000000001,
+        "run_cost_usd": 125.0,
+        "net_cash_flow_usd": 626.5200000000001,
+        "cumulative_net_value_usd": -6120.439999999999
+      },
+      {
+        "month": 4,
+        "adoption": 0.6,
+        "gross_savings_usd": 751.5200000000001,
+        "run_cost_usd": 125.0,
+        "net_cash_flow_usd": 626.5200000000001,
+        "cumulative_net_value_usd": -5493.919999999998
+      },
+      {
+        "month": 5,
+        "adoption": 0.8,
+        "gross_savings_usd": 1002.0266666666669,
+        "run_cost_usd": 125.0,
+        "net_cash_flow_usd": 877.0266666666669,
+        "cumulative_net_value_usd": -4616.893333333332
+      },
+      {
+        "month": 6,
+        "adoption": 0.8,
+        "gross_savings_usd": 1002.0266666666669,
+        "run_cost_usd": 125.0,
+        "net_cash_flow_usd": 877.0266666666669,
+        "cumulative_net_value_usd": -3739.866666666665
+      },
+      {
+        "month": 7,
+        "adoption": 0.8,
+        "gross_savings_usd": 1002.0266666666669,
+        "run_cost_usd": 125.0,
+        "net_cash_flow_usd": 877.0266666666669,
+        "cumulative_net_value_usd": -2862.8399999999983
+      },
+      {
+        "month": 8,
+        "adoption": 0.8,
+        "gross_savings_usd": 1002.0266666666669,
+        "run_cost_usd": 125.0,
+        "net_cash_flow_usd": 877.0266666666669,
+        "cumulative_net_value_usd": -1985.8133333333315
+      },
+      {
+        "month": 9,
+        "adoption": 0.95,
+        "gross_savings_usd": 1189.9066666666668,
+        "run_cost_usd": 125.0,
+        "net_cash_flow_usd": 1064.9066666666668,
+        "cumulative_net_value_usd": -920.9066666666647
+      },
+      {
+        "month": 10,
+        "adoption": 0.95,
+        "gross_savings_usd": 1189.9066666666668,
+        "run_cost_usd": 125.0,
+        "net_cash_flow_usd": 1064.9066666666668,
+        "cumulative_net_value_usd": 144.00000000000205
+      },
+      {
+        "month": 11,
+        "adoption": 0.95,
+        "gross_savings_usd": 1189.9066666666668,
+        "run_cost_usd": 125.0,
+        "net_cash_flow_usd": 1064.9066666666668,
+        "cumulative_net_value_usd": 1208.9066666666688
+      },
+      {
+        "month": 12,
+        "adoption": 0.95,
+        "gross_savings_usd": 1189.9066666666668,
+        "run_cost_usd": 125.0,
+        "net_cash_flow_usd": 1064.9066666666668,
+        "cumulative_net_value_usd": 2273.8133333333353
+      },
+      {
+        "month": 13,
+        "adoption": 0.95,
+        "gross_savings_usd": 1189.9066666666668,
+        "run_cost_usd": 125.0,
+        "net_cash_flow_usd": 1064.9066666666668,
+        "cumulative_net_value_usd": 3338.720000000002
+      },
+      {
+        "month": 14,
+        "adoption": 0.95,
+        "gross_savings_usd": 1189.9066666666668,
+        "run_cost_usd": 125.0,
+        "net_cash_flow_usd": 1064.9066666666668,
+        "cumulative_net_value_usd": 4403.626666666669
+      },
+      {
+        "month": 15,
+        "adoption": 0.95,
+        "gross_savings_usd": 1189.9066666666668,
+        "run_cost_usd": 125.0,
+        "net_cash_flow_usd": 1064.9066666666668,
+        "cumulative_net_value_usd": 5468.533333333336
+      },
+      {
+        "month": 16,
+        "adoption": 0.95,
+        "gross_savings_usd": 1189.9066666666668,
+        "run_cost_usd": 125.0,
+        "net_cash_flow_usd": 1064.9066666666668,
+        "cumulative_net_value_usd": 6533.440000000002
+      },
+      {
+        "month": 17,
+        "adoption": 0.95,
+        "gross_savings_usd": 1189.9066666666668,
+        "run_cost_usd": 125.0,
+        "net_cash_flow_usd": 1064.9066666666668,
+        "cumulative_net_value_usd": 7598.346666666669
+      },
+      {
+        "month": 18,
+        "adoption": 0.95,
+        "gross_savings_usd": 1189.9066666666668,
+        "run_cost_usd": 125.0,
+        "net_cash_flow_usd": 1064.9066666666668,
+        "cumulative_net_value_usd": 8663.253333333336
+      },
+      {
+        "month": 19,
+        "adoption": 0.95,
+        "gross_savings_usd": 1189.9066666666668,
+        "run_cost_usd": 125.0,
+        "net_cash_flow_usd": 1064.9066666666668,
+        "cumulative_net_value_usd": 9728.160000000003
+      },
+      {
+        "month": 20,
+        "adoption": 0.95,
+        "gross_savings_usd": 1189.9066666666668,
+        "run_cost_usd": 125.0,
+        "net_cash_flow_usd": 1064.9066666666668,
+        "cumulative_net_value_usd": 10793.06666666667
+      },
+      {
+        "month": 21,
+        "adoption": 0.95,
+        "gross_savings_usd": 1189.9066666666668,
+        "run_cost_usd": 125.0,
+        "net_cash_flow_usd": 1064.9066666666668,
+        "cumulative_net_value_usd": 11857.973333333335
+      },
+      {
+        "month": 22,
+        "adoption": 0.95,
+        "gross_savings_usd": 1189.9066666666668,
+        "run_cost_usd": 125.0,
+        "net_cash_flow_usd": 1064.9066666666668,
+        "cumulative_net_value_usd": 12922.880000000001
+      },
+      {
+        "month": 23,
+        "adoption": 0.95,
+        "gross_savings_usd": 1189.9066666666668,
+        "run_cost_usd": 125.0,
+        "net_cash_flow_usd": 1064.9066666666668,
+        "cumulative_net_value_usd": 13987.786666666667
+      },
+      {
+        "month": 24,
+        "adoption": 0.95,
+        "gross_savings_usd": 1189.9066666666668,
+        "run_cost_usd": 125.0,
+        "net_cash_flow_usd": 1064.9066666666668,
+        "cumulative_net_value_usd": 15052.693333333333
+      },
+      {
+        "month": 25,
+        "adoption": 0.95,
+        "gross_savings_usd": 1189.9066666666668,
+        "run_cost_usd": 125.0,
+        "net_cash_flow_usd": 1064.9066666666668,
+        "cumulative_net_value_usd": 16117.599999999999
+      },
+      {
+        "month": 26,
+        "adoption": 0.95,
+        "gross_savings_usd": 1189.9066666666668,
+        "run_cost_usd": 125.0,
+        "net_cash_flow_usd": 1064.9066666666668,
+        "cumulative_net_value_usd": 17182.506666666664
+      },
+      {
+        "month": 27,
+        "adoption": 0.95,
+        "gross_savings_usd": 1189.9066666666668,
+        "run_cost_usd": 125.0,
+        "net_cash_flow_usd": 1064.9066666666668,
+        "cumulative_net_value_usd": 18247.41333333333
+      },
+      {
+        "month": 28,
+        "adoption": 0.95,
+        "gross_savings_usd": 1189.9066666666668,
+        "run_cost_usd": 125.0,
+        "net_cash_flow_usd": 1064.9066666666668,
+        "cumulative_net_value_usd": 19312.319999999996
+      },
+      {
+        "month": 29,
+        "adoption": 0.95,
+        "gross_savings_usd": 1189.9066666666668,
+        "run_cost_usd": 125.0,
+        "net_cash_flow_usd": 1064.9066666666668,
+        "cumulative_net_value_usd": 20377.226666666662
+      },
+      {
+        "month": 30,
+        "adoption": 0.95,
+        "gross_savings_usd": 1189.9066666666668,
+        "run_cost_usd": 125.0,
+        "net_cash_flow_usd": 1064.9066666666668,
+        "cumulative_net_value_usd": 21442.133333333328
+      },
+      {
+        "month": 31,
+        "adoption": 0.95,
+        "gross_savings_usd": 1189.9066666666668,
+        "run_cost_usd": 125.0,
+        "net_cash_flow_usd": 1064.9066666666668,
+        "cumulative_net_value_usd": 22507.039999999994
+      },
+      {
+        "month": 32,
+        "adoption": 0.95,
+        "gross_savings_usd": 1189.9066666666668,
+        "run_cost_usd": 125.0,
+        "net_cash_flow_usd": 1064.9066666666668,
+        "cumulative_net_value_usd": 23571.94666666666
+      },
+      {
+        "month": 33,
+        "adoption": 0.95,
+        "gross_savings_usd": 1189.9066666666668,
+        "run_cost_usd": 125.0,
+        "net_cash_flow_usd": 1064.9066666666668,
+        "cumulative_net_value_usd": 24636.853333333325
+      },
+      {
+        "month": 34,
+        "adoption": 0.95,
+        "gross_savings_usd": 1189.9066666666668,
+        "run_cost_usd": 125.0,
+        "net_cash_flow_usd": 1064.9066666666668,
+        "cumulative_net_value_usd": 25701.75999999999
+      },
+      {
+        "month": 35,
+        "adoption": 0.95,
+        "gross_savings_usd": 1189.9066666666668,
+        "run_cost_usd": 125.0,
+        "net_cash_flow_usd": 1064.9066666666668,
+        "cumulative_net_value_usd": 26766.666666666657
+      },
+      {
+        "month": 36,
+        "adoption": 0.95,
+        "gross_savings_usd": 1189.9066666666668,
+        "run_cost_usd": 125.0,
+        "net_cash_flow_usd": 1064.9066666666668,
+        "cumulative_net_value_usd": 27831.573333333323
+      }
+    ],
+    "cumulative_months": [
+      0,
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9,
+      10,
+      11,
+      12,
+      13,
+      14,
+      15,
+      16,
+      17,
+      18,
+      19,
+      20,
+      21,
+      22,
+      23,
+      24,
+      25,
+      26,
+      27,
+      28,
+      29,
+      30,
+      31,
+      32,
+      33,
+      34,
+      35,
+      36
+    ],
+    "cumulative_net_value_usd": [
+      -8000.0,
+      -7373.48,
+      -6746.959999999999,
+      -6120.439999999999,
+      -5493.919999999998,
+      -4616.893333333332,
+      -3739.866666666665,
+      -2862.8399999999983,
+      -1985.8133333333315,
+      -920.9066666666647,
+      144.00000000000205,
+      1208.9066666666688,
+      2273.8133333333353,
+      3338.720000000002,
+      4403.626666666669,
+      5468.533333333336,
+      6533.440000000002,
+      7598.346666666669,
+      8663.253333333336,
+      9728.160000000003,
+      10793.06666666667,
+      11857.973333333335,
+      12922.880000000001,
+      13987.786666666667,
+      15052.693333333333,
+      16117.599999999999,
+      17182.506666666664,
+      18247.41333333333,
+      19312.319999999996,
+      20377.226666666662,
+      21442.133333333328,
+      22507.039999999994,
+      23571.94666666666,
+      24636.853333333325,
+      25701.75999999999,
+      26766.666666666657,
+      27831.573333333323
+    ]
+  },
+  "sensitivity": [
+    {
+      "adoption": 0.6,
+      "hours_per_year": 409.92,
+      "gross_value_usd_per_year": 9018.24,
+      "run_cost_usd_per_year": 1500.0,
+      "net_value_usd_per_year": 7518.24,
+      "steady_state_payback_months": 12.768945923514014
+    },
+    {
+      "adoption": 0.8,
+      "hours_per_year": 546.5600000000001,
+      "gross_value_usd_per_year": 12024.320000000002,
+      "run_cost_usd_per_year": 1500.0,
+      "net_value_usd_per_year": 10524.320000000002,
+      "steady_state_payback_months": 9.12172947990939
+    },
+    {
+      "adoption": 0.95,
+      "hours_per_year": 649.04,
+      "gross_value_usd_per_year": 14278.88,
+      "run_cost_usd_per_year": 1500.0,
+      "net_value_usd_per_year": 12778.88,
+      "steady_state_payback_months": 7.51239545249662
+    }
+  ]
+}

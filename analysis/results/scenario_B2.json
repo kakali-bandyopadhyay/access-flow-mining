@@ -1,0 +1,80 @@
+{
+  "synthetic": true,
+  "scenario": "B2",
+  "case_count": 2000,
+  "intended_classification": "HANDOFF-BOUND",
+  "classified": "HANDOFF-BOUND",
+  "margin": 8.104614825487483,
+  "approver_share": 0.10612370653122824,
+  "handoff_share": 0.8600917652886751,
+  "doer_share": 0.03378452818009661,
+  "wait_share": 0.9604146492279041,
+  "cycle_bh_mean": 44.055389722222216,
+  "cycle_bh_median": 36.59791666666666,
+  "cycle_bh_p90": 67.63852777777784,
+  "cycle_bh_p95": 104.48208333333332,
+  "mean_days": 7.22032644675926,
+  "median_days": 6.084045138888889,
+  "p90_days": 11.609900462962965,
+  "p95_days": 18.339107638888883,
+  "loop_rate": 0.18,
+  "mean_loops_per_case": 0.21,
+  "breach_rate": 0.219,
+  "defect_rate": 0.343,
+  "dpmo": 343000.0,
+  "sigma_before": 1.9042892902985789,
+  "after_defect_rate": 0.2939759999999999,
+  "after_dpmo": 293975.9999999999,
+  "sigma_after": 2.041806228766567,
+  "top_three_diagnostics": [
+    {
+      "step": 5,
+      "activity": "Entitlement owner approval",
+      "component": "handoff",
+      "hours": 29330.255,
+      "share": 0.3328793047222252
+    },
+    {
+      "step": 3,
+      "activity": "Line manager approval",
+      "component": "handoff",
+      "hours": 9188.313333333334,
+      "share": 0.10428137614111953
+    },
+    {
+      "step": 7,
+      "activity": "Confirm access works",
+      "component": "handoff",
+      "hours": 7663.833888888889,
+      "share": 0.08697952665055114
+    }
+  ],
+  "return_point_pareto": [
+    {
+      "scenario": "B2",
+      "rank": 1,
+      "return_point": 2,
+      "loop_count": 336,
+      "share": 0.8,
+      "cumulative_share": 0.8
+    },
+    {
+      "scenario": "B2",
+      "rank": 2,
+      "return_point": 3,
+      "loop_count": 51,
+      "share": 0.12142857142857143,
+      "cumulative_share": 0.9214285714285714
+    },
+    {
+      "scenario": "B2",
+      "rank": 3,
+      "return_point": 5,
+      "loop_count": 33,
+      "share": 0.07857142857142857,
+      "cumulative_share": 1.0
+    }
+  ],
+  "top5_variant_coverage": 0.969,
+  "conformance_rate_exact_path": 0.771
+}

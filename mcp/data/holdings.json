@@ -1,0 +1,7 @@
+{
+  "synthetic": true,
+  "holdings": [
+    {"requester": "USR-IN-007", "entitlement": "order-router-write"},
+    {"requester": "USR-IN-010", "entitlement": "market-data-write"}
+  ]
+}

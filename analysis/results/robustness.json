@@ -1,0 +1,207 @@
+{
+  "synthetic": true,
+  "hold_removed": {
+    "pass": true,
+    "results": [
+      {
+        "scenario": "A1",
+        "intended": "APPROVER-BOUND",
+        "classified": "APPROVER-BOUND",
+        "margin": 2.9384608926223206,
+        "wait_share": 0.9515460503994533
+      },
+      {
+        "scenario": "A2",
+        "intended": "APPROVER-BOUND",
+        "classified": "APPROVER-BOUND",
+        "margin": 2.810689950042037,
+        "wait_share": 0.9509211687950806
+      },
+      {
+        "scenario": "B1",
+        "intended": "HANDOFF-BOUND",
+        "classified": "HANDOFF-BOUND",
+        "margin": 6.136934760975785,
+        "wait_share": 0.9524897546216098
+      },
+      {
+        "scenario": "B2",
+        "intended": "HANDOFF-BOUND",
+        "classified": "HANDOFF-BOUND",
+        "margin": 6.221963219600613,
+        "wait_share": 0.950531051859074
+      }
+    ]
+  },
+  "jitter": {
+    "repetitions": 5,
+    "scenarios": 4,
+    "correct_with_margin": 20,
+    "total": 20,
+    "pass": true,
+    "margin_min": 3.455609557239851,
+    "margin_max": 8.730539725279423,
+    "results": [
+      {
+        "repetition": 1,
+        "scenario": "A1",
+        "intended": "APPROVER-BOUND",
+        "classified": "APPROVER-BOUND",
+        "margin": 3.7424385533942472,
+        "wait_share": 0.9600815276903725
+      },
+      {
+        "repetition": 1,
+        "scenario": "A2",
+        "intended": "APPROVER-BOUND",
+        "classified": "APPROVER-BOUND",
+        "margin": 3.455609557239851,
+        "wait_share": 0.9579712313771718
+      },
+      {
+        "repetition": 1,
+        "scenario": "B1",
+        "intended": "HANDOFF-BOUND",
+        "classified": "HANDOFF-BOUND",
+        "margin": 8.098834746790354,
+        "wait_share": 0.9625516221069159
+      },
+      {
+        "repetition": 1,
+        "scenario": "B2",
+        "intended": "HANDOFF-BOUND",
+        "classified": "HANDOFF-BOUND",
+        "margin": 8.25783963016898,
+        "wait_share": 0.9611229451066416
+      },
+      {
+        "repetition": 2,
+        "scenario": "A1",
+        "intended": "APPROVER-BOUND",
+        "classified": "APPROVER-BOUND",
+        "margin": 4.325590922698337,
+        "wait_share": 0.9692362479007708
+      },
+      {
+        "repetition": 2,
+        "scenario": "A2",
+        "intended": "APPROVER-BOUND",
+        "classified": "APPROVER-BOUND",
+        "margin": 4.0193412071364785,
+        "wait_share": 0.9677277706072956
+      },
+      {
+        "repetition": 2,
+        "scenario": "B1",
+        "intended": "HANDOFF-BOUND",
+        "classified": "HANDOFF-BOUND",
+        "margin": 7.678462619374653,
+        "wait_share": 0.9656091119384625
+      },
+      {
+        "repetition": 2,
+        "scenario": "B2",
+        "intended": "HANDOFF-BOUND",
+        "classified": "HANDOFF-BOUND",
+        "margin": 8.016872838489514,
+        "wait_share": 0.9645426942160621
+      },
+      {
+        "repetition": 3,
+        "scenario": "A1",
+        "intended": "APPROVER-BOUND",
+        "classified": "APPROVER-BOUND",
+        "margin": 4.210041022415243,
+        "wait_share": 0.9643541488704509
+      },
+      {
+        "repetition": 3,
+        "scenario": "A2",
+        "intended": "APPROVER-BOUND",
+        "classified": "APPROVER-BOUND",
+        "margin": 4.069325906226561,
+        "wait_share": 0.9631376053848678
+      },
+      {
+        "repetition": 3,
+        "scenario": "B1",
+        "intended": "HANDOFF-BOUND",
+        "classified": "HANDOFF-BOUND",
+        "margin": 8.538349324547484,
+        "wait_share": 0.9651488155592324
+      },
+      {
+        "repetition": 3,
+        "scenario": "B2",
+        "intended": "HANDOFF-BOUND",
+        "classified": "HANDOFF-BOUND",
+        "margin": 8.414755281018891,
+        "wait_share": 0.9631546666066315
+      },
+      {
+        "repetition": 4,
+        "scenario": "A1",
+        "intended": "APPROVER-BOUND",
+        "classified": "APPROVER-BOUND",
+        "margin": 4.092687481239161,
+        "wait_share": 0.9598664439719935
+      },
+      {
+        "repetition": 4,
+        "scenario": "A2",
+        "intended": "APPROVER-BOUND",
+        "classified": "APPROVER-BOUND",
+        "margin": 3.853068731240325,
+        "wait_share": 0.9582322758688959
+      },
+      {
+        "repetition": 4,
+        "scenario": "B1",
+        "intended": "HANDOFF-BOUND",
+        "classified": "HANDOFF-BOUND",
+        "margin": 8.057367855756015,
+        "wait_share": 0.9593552816824003
+      },
+      {
+        "repetition": 4,
+        "scenario": "B2",
+        "intended": "HANDOFF-BOUND",
+        "classified": "HANDOFF-BOUND",
+        "margin": 8.730539725279423,
+        "wait_share": 0.9613171873701412
+      },
+      {
+        "repetition": 5,
+        "scenario": "A1",
+        "intended": "APPROVER-BOUND",
+        "classified": "APPROVER-BOUND",
+        "margin": 4.521970904911155,
+        "wait_share": 0.9684438959245876
+      },
+      {
+        "repetition": 5,
+        "scenario": "A2",
+        "intended": "APPROVER-BOUND",
+        "classified": "APPROVER-BOUND",
+        "margin": 4.259859700989623,
+        "wait_share": 0.9671075011662774
+      },
+      {
+        "repetition": 5,
+        "scenario": "B1",
+        "intended": "HANDOFF-BOUND",
+        "classified": "HANDOFF-BOUND",
+        "margin": 8.434520022028027,
+        "wait_share": 0.9634616128211277
+      },
+      {
+        "repetition": 5,
+        "scenario": "B2",
+        "intended": "HANDOFF-BOUND",
+        "classified": "HANDOFF-BOUND",
+        "margin": 8.517858094193018,
+        "wait_share": 0.9632425608322521
+      }
+    ]
+  }
+}

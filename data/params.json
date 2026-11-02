@@ -1,0 +1,60 @@
+{
+  "synthetic": true,
+  "activity_profiles": {
+    "A": [
+      {"step": 1, "activity": "Submit request", "team": "requester_by_region", "timezone": "requester", "approval": false, "queue_mean_bh": 0.43, "touch_mean_bh": 0.05, "handoff_mean_bh": 0.0},
+      {"step": 2, "activity": "Validate request", "team": "access_service_desk", "timezone": "Asia/Kolkata", "approval": false, "queue_mean_bh": 0.75, "touch_mean_bh": 0.20, "handoff_mean_bh": 0.75},
+      {"step": 3, "activity": "Line manager approval", "team": "line_management_by_region", "timezone": "requester", "approval": true, "queue_mean_bh": 4.71, "touch_mean_bh": 0.10, "handoff_mean_bh": 0.64},
+      {"step": 4, "activity": "SoD / access-risk check", "team": "access_risk_controls", "timezone": "Europe/London", "approval": false, "queue_mean_bh": 0.86, "touch_mean_bh": 0.25, "handoff_mean_bh": 0.64},
+      {"step": 5, "activity": "Entitlement owner approval", "team": "application_owners", "timezone": "America/New_York", "approval": true, "queue_mean_bh": 20.34, "touch_mean_bh": 0.15, "handoff_mean_bh": 0.86},
+      {"step": 6, "activity": "Provision access", "team": "iam_engineering", "timezone": "Asia/Kolkata", "approval": false, "queue_mean_bh": 1.18, "touch_mean_bh": 0.70, "handoff_mean_bh": 0.64},
+      {"step": 7, "activity": "Confirm access works", "team": "requester_by_region", "timezone": "requester", "approval": false, "queue_mean_bh": 0.32, "touch_mean_bh": 0.10, "handoff_mean_bh": 0.43},
+      {"step": 8, "activity": "Close request", "team": "access_service_desk", "timezone": "Asia/Kolkata", "approval": false, "queue_mean_bh": 0.32, "touch_mean_bh": 0.05, "handoff_mean_bh": 0.43}
+    ],
+    "B": [
+      {"step": 1, "activity": "Submit request", "team": "requester_by_region", "timezone": "requester", "approval": false, "queue_mean_bh": 0.36, "touch_mean_bh": 0.05, "handoff_mean_bh": 0.0},
+      {"step": 2, "activity": "Validate request", "team": "access_service_desk", "timezone": "Asia/Kolkata", "approval": false, "queue_mean_bh": 1.29, "touch_mean_bh": 0.20, "handoff_mean_bh": 1.86},
+      {"step": 3, "activity": "Line manager approval", "team": "line_management_by_region", "timezone": "requester", "approval": true, "queue_mean_bh": 2.00, "touch_mean_bh": 0.10, "handoff_mean_bh": 4.58},
+      {"step": 4, "activity": "SoD / access-risk check", "team": "access_risk_controls", "timezone": "Europe/London", "approval": false, "queue_mean_bh": 1.43, "touch_mean_bh": 0.25, "handoff_mean_bh": 1.57},
+      {"step": 5, "activity": "Entitlement owner approval", "team": "application_owners", "timezone": "America/New_York", "approval": true, "queue_mean_bh": 2.43, "touch_mean_bh": 0.15, "handoff_mean_bh": 6.01},
+      {"step": 6, "activity": "Provision access", "team": "iam_engineering", "timezone": "Asia/Kolkata", "approval": false, "queue_mean_bh": 3.15, "touch_mean_bh": 0.70, "handoff_mean_bh": 1.86},
+      {"step": 7, "activity": "Confirm access works", "team": "requester_by_region", "timezone": "requester", "approval": false, "queue_mean_bh": 0.64, "touch_mean_bh": 0.10, "handoff_mean_bh": 3.72},
+      {"step": 8, "activity": "Close request", "team": "access_service_desk", "timezone": "Asia/Kolkata", "approval": false, "queue_mean_bh": 0.50, "touch_mean_bh": 0.05, "handoff_mean_bh": 1.29}
+    ]
+  },
+  "distribution_sigma": {"queue": 0.55, "touch": 0.45, "handoff": 0.60, "hold": 0.65},
+  "scenarios": {
+    "A1": {"profile": "A", "rework_intensity": "low", "seed": 1010},
+    "A2": {"profile": "A", "rework_intensity": "high", "seed": 1020},
+    "B1": {"profile": "B", "rework_intensity": "low", "seed": 2010},
+    "B2": {"profile": "B", "rework_intensity": "high", "seed": 2020}
+  },
+  "table_3": {
+    "log_window": {"start": "2026-03-01", "end": "2026-08-31"},
+    "cases_per_scenario": 2000,
+    "arrival_in_hours_fraction": 0.85,
+    "case_type_probabilities": {"standard": 0.60, "privileged": 0.30, "emergency": 0.10},
+    "queue_handoff_multiplier": {"standard": 1.00, "privileged": 1.15, "emergency": 0.35},
+    "touch_multiplier": {"standard": 1.0, "privileged": 1.0, "emergency": 1.0},
+    "sla_calendar_days": {"standard": 10, "privileged": 7, "emergency": 4},
+    "rework_case_shares": {
+      "low": {"zero": 0.96, "once": 0.035, "twice": 0.005, "return_point_probabilities": {"2": 0.70, "3": 0.20, "5": 0.10}},
+      "high": {"zero": 0.82, "once": 0.15, "twice": 0.03, "return_point_probabilities": {"2": 0.82, "3": 0.12, "5": 0.06}}
+    },
+    "provisioning_failure_probability": {"low": 0.02, "high": 0.06},
+    "return_handoff_mean_bh": 0.60,
+    "replay_approval_queue_fraction": 0.50,
+    "resubmission_touch_total_mean_minutes": 22.0,
+    "resubmission_touch_mean_bh": {"step_1": 0.12833333333333333, "step_2": 0.23833333333333334},
+    "intake_touch_mean_bh": 0.20,
+    "hold": {"case_fraction": 0.12, "mean_bh": 80.0, "sigma": 0.65, "profile_component": "largest_queue_plus_handoff", "activity_step": 5, "attach_by_profile": {"A": "queue", "B": "handoff"}},
+    "regions": {
+      "India": {"timezone": "Asia/Kolkata", "requester_team": "requester_india", "line_management_team": "line_management_india", "probability": 0.60},
+      "UK": {"timezone": "Europe/London", "requester_team": "requester_uk", "line_management_team": "line_management_uk", "probability": 0.25},
+      "US East": {"timezone": "America/New_York", "requester_team": "requester_us_east", "line_management_team": "line_management_us_east", "probability": 0.15}
+    },
+    "resubmission_touch_sigma": 0.45,
+    "intake_touch_sigma": 0.45,
+    "channels": ["synthetic_portal"]
+  }
+}

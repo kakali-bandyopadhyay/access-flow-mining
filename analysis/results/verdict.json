@@ -1,0 +1,45 @@
+{
+  "synthetic": true,
+  "intended_by_cell": {
+    "A1": "APPROVER-BOUND",
+    "A2": "APPROVER-BOUND",
+    "B1": "HANDOFF-BOUND",
+    "B2": "HANDOFF-BOUND"
+  },
+  "confusion_matrix": {
+    "APPROVER-BOUND": {
+      "APPROVER-BOUND": 2,
+      "HANDOFF-BOUND": 0,
+      "DOER-BOUND": 0,
+      "INDETERMINATE": 0
+    },
+    "HANDOFF-BOUND": {
+      "APPROVER-BOUND": 0,
+      "HANDOFF-BOUND": 2,
+      "DOER-BOUND": 0,
+      "INDETERMINATE": 0
+    },
+    "DOER-BOUND": {
+      "APPROVER-BOUND": 0,
+      "HANDOFF-BOUND": 0,
+      "DOER-BOUND": 0,
+      "INDETERMINATE": 0
+    },
+    "INDETERMINATE": {
+      "APPROVER-BOUND": 0,
+      "HANDOFF-BOUND": 0,
+      "DOER-BOUND": 0,
+      "INDETERMINATE": 0
+    }
+  },
+  "all_four_correct": true,
+  "all_margins_at_least_1_5": true,
+  "no_indeterminate": true,
+  "wait_share_contradiction": false,
+  "pass": true,
+  "acceptance_bands_pass": false,
+  "acceptance_band_misses": [
+    "A1 p95 calendar days",
+    "A2 p95 calendar days"
+  ]
+}

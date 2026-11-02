@@ -1,0 +1,84 @@
+{
+  "synthetic": true,
+  "business_days": ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday"],
+  "public_holidays": "none",
+  "window": {
+    "start": "2026-03-01",
+    "end": "2026-08-31"
+  },
+  "teams": {
+    "requester_india": {
+      "display_name": "Requesting team - India",
+      "timezone": "Asia/Kolkata",
+      "start": "09:00",
+      "end": "18:00"
+    },
+    "requester_uk": {
+      "display_name": "Requesting team - UK",
+      "timezone": "Europe/London",
+      "start": "09:00",
+      "end": "17:30"
+    },
+    "requester_us_east": {
+      "display_name": "Requesting team - US East",
+      "timezone": "America/New_York",
+      "start": "09:00",
+      "end": "17:00"
+    },
+    "access_service_desk": {
+      "display_name": "Access Service Desk",
+      "timezone": "Asia/Kolkata",
+      "start": "09:00",
+      "end": "18:00"
+    },
+    "line_management_india": {
+      "display_name": "Line Management - India requester calendar",
+      "timezone": "Asia/Kolkata",
+      "start": "09:00",
+      "end": "18:00"
+    },
+    "line_management_uk": {
+      "display_name": "Line Management - UK requester calendar",
+      "timezone": "Europe/London",
+      "start": "09:00",
+      "end": "17:30"
+    },
+    "line_management_us_east": {
+      "display_name": "Line Management - US East requester calendar",
+      "timezone": "America/New_York",
+      "start": "09:00",
+      "end": "17:00"
+    },
+    "access_risk_controls": {
+      "display_name": "Access Risk and Controls",
+      "timezone": "Europe/London",
+      "start": "09:00",
+      "end": "17:30"
+    },
+    "application_owners": {
+      "display_name": "Application Owners",
+      "timezone": "America/New_York",
+      "start": "09:00",
+      "end": "17:00"
+    },
+    "iam_engineering": {
+      "display_name": "IAM Engineering",
+      "timezone": "Asia/Kolkata",
+      "start": "09:00",
+      "end": "18:00"
+    }
+  },
+  "aliases": {
+    "requesting team india": "requester_india",
+    "requesting team uk": "requester_uk",
+    "requesting team us east": "requester_us_east",
+    "access service desk": "access_service_desk",
+    "line management india": "line_management_india",
+    "line management uk": "line_management_uk",
+    "line management us east": "line_management_us_east",
+    "access risk and controls": "access_risk_controls",
+    "access risk controls": "access_risk_controls",
+    "application owners": "application_owners",
+    "iam engineering": "iam_engineering"
+  }
+}

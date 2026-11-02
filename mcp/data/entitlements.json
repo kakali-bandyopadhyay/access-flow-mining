@@ -1,0 +1,18 @@
+{
+  "synthetic": true,
+  "entitlements": [
+    {"entitlement": "market-data-read", "tier": "standard", "approver_path": ["manager", "app_owner"], "prior_approval_validity_days": 365, "sod_conflicts_with": []},
+    {"entitlement": "market-data-write", "tier": "privileged", "approver_path": ["manager", "app_owner"], "prior_approval_validity_days": 180, "sod_conflicts_with": ["order-router-write"]},
+    {"entitlement": "order-router-read", "tier": "standard", "approver_path": ["manager", "app_owner"], "prior_approval_validity_days": 365, "sod_conflicts_with": []},
+    {"entitlement": "order-router-write", "tier": "privileged", "approver_path": ["manager", "app_owner"], "prior_approval_validity_days": 180, "sod_conflicts_with": ["market-data-write", "risk-warehouse-write"]},
+    {"entitlement": "risk-warehouse-read", "tier": "standard", "approver_path": ["manager", "app_owner"], "prior_approval_validity_days": 365, "sod_conflicts_with": []},
+    {"entitlement": "risk-warehouse-write", "tier": "privileged", "approver_path": ["manager", "app_owner"], "prior_approval_validity_days": 180, "sod_conflicts_with": ["order-router-write"]},
+    {"entitlement": "payments-gateway-deploy", "tier": "privileged", "approver_path": ["manager", "app_owner"], "prior_approval_validity_days": 180, "sod_conflicts_with": ["settlement-batch-ops"]},
+    {"entitlement": "settlement-batch-ops", "tier": "privileged", "approver_path": ["manager", "app_owner"], "prior_approval_validity_days": 180, "sod_conflicts_with": ["payments-gateway-deploy"]},
+    {"entitlement": "customer-data-read", "tier": "standard", "approver_path": ["manager", "app_owner"], "prior_approval_validity_days": 365, "sod_conflicts_with": []},
+    {"entitlement": "customer-data-write", "tier": "privileged", "approver_path": ["manager", "app_owner"], "prior_approval_validity_days": 180, "sod_conflicts_with": ["prod-db-admin"]},
+    {"entitlement": "prod-db-admin", "tier": "privileged", "approver_path": ["manager", "app_owner"], "prior_approval_validity_days": 90, "sod_conflicts_with": ["customer-data-write", "secrets-vault-admin"]},
+    {"entitlement": "secrets-vault-admin", "tier": "privileged", "approver_path": ["manager", "app_owner"], "prior_approval_validity_days": 90, "sod_conflicts_with": ["prod-db-admin", "ci-pipeline-admin"]},
+    {"entitlement": "ci-pipeline-admin", "tier": "privileged", "approver_path": ["manager", "app_owner"], "prior_approval_validity_days": 180, "sod_conflicts_with": ["secrets-vault-admin"]}
+  ]
+}
