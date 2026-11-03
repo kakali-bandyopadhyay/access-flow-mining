@@ -30,6 +30,17 @@ The hold-removed analysis classifies all four cells correctly; the jitter analys
 
 `mcp/triage.py` uses the model for a recommendation only; a human gate decides, with one confirmation for standard entitlements and two from different approvers (neither the requester) for privileged ones (RQ-002 and RQ-006 to RQ-010 of the ten pre-registered samples, plus RQ-011, added later and scored separately), refuses unregistered entitlements before any model call, logs every blocked attempt, and executes each request at most once (`tests/test_gate.py`).
 
+## Triage evaluation (real model, optional)
+
+`python -m pytest` needs no API key: the gate and evaluation tests use fake models. To run the real-model evaluation, copy `.env.example` to `.env`, fill in the key and the two prices, then:
+
+```powershell
+python mcp/smoke_openai.py RQ-001   # one call, no gate, no audit log
+python mcp/eval_samples.py          # all samples, 3 repeats, stops above USD 0.05
+```
+
+Each run writes `mcp/runs/<UTC stamp>/` (git-ignored): one audit log per repeat and `results.json`, which records `rules_version`. The ten pre-registered samples and RQ-011 are scored separately. Results by run are in `FINDINGS.md`; rule changes are in `DEVIATIONS.md`.
+
 ## Limits
 
 The model uses fixed queue parameters rather than staffing capacity, a sequential path, at most two rework loops, weekends but no public holidays, and one process represented by four parameter scenarios. The hold reinforces the planted owner signal by design. See `CASE_STUDY.md` and Part B §9 of the pre-registration for the full limitations.
