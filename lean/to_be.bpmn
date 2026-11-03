@@ -1,0 +1,432 @@
+<?xml version='1.0' encoding='utf-8'?>
+<bpmn:definitions xmlns:bpmn="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:dc="http://www.omg.org/spec/DD/20100524/DC" xmlns:di="http://www.omg.org/spec/DD/20100524/DI" id="Definitions_to_be" targetNamespace="https://example.invalid/access-flow-synthetic" exporter="Codex draft for demo.bpmn.io" exporterVersion="1.0">
+  <bpmn:process id="Process_to_be" name="Access provisioning (synthetic)" isExecutable="false">
+    <bpmn:laneSet id="LaneSet_to_be">
+      <bpmn:lane id="Lane_to_be_requester" name="Requesting team">
+        <bpmn:flowNodeRef>to_be_start</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>to_be_merge</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>to_be_s1</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>to_be_s7</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>to_be_g7</bpmn:flowNodeRef>
+      </bpmn:lane>
+      <bpmn:lane id="Lane_to_be_desk" name="Access Service Desk">
+        <bpmn:flowNodeRef>to_be_bot</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>to_be_bot_g</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>to_be_s2</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>to_be_g2</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>to_be_s8</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>to_be_end</bpmn:flowNodeRef>
+      </bpmn:lane>
+      <bpmn:lane id="Lane_to_be_line" name="Line Management">
+        <bpmn:flowNodeRef>to_be_triage</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>to_be_priv</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>to_be_s3</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>to_be_g3</bpmn:flowNodeRef>
+      </bpmn:lane>
+      <bpmn:lane id="Lane_to_be_risk" name="Access Risk and Controls">
+        <bpmn:flowNodeRef>to_be_s4</bpmn:flowNodeRef>
+      </bpmn:lane>
+      <bpmn:lane id="Lane_to_be_owners" name="Application Owners">
+        <bpmn:flowNodeRef>to_be_s5</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>to_be_g5</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>to_be_priv2</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>to_be_second</bpmn:flowNodeRef>
+      </bpmn:lane>
+      <bpmn:lane id="Lane_to_be_iam" name="IAM Engineering">
+        <bpmn:flowNodeRef>to_be_s6</bpmn:flowNodeRef>
+      </bpmn:lane>
+    </bpmn:laneSet>
+    <bpmn:startEvent id="to_be_start" name="Start" isInterrupting="true" parallelMultiple="false">
+      <bpmn:outgoing>Flow_to_be_1</bpmn:outgoing>
+    </bpmn:startEvent>
+    <bpmn:exclusiveGateway id="to_be_merge" name="" gatewayDirection="Converging">
+      <bpmn:incoming>Flow_to_be_1</bpmn:incoming>
+      <bpmn:outgoing>Flow_to_be_2</bpmn:outgoing>
+      <bpmn:incoming>Flow_to_be_6</bpmn:incoming>
+      <bpmn:incoming>Flow_to_be_9</bpmn:incoming>
+      <bpmn:incoming>Flow_to_be_15</bpmn:incoming>
+      <bpmn:incoming>Flow_to_be_19</bpmn:incoming>
+    </bpmn:exclusiveGateway>
+    <bpmn:task id="to_be_s1" name="1 Submit request">
+      <bpmn:incoming>Flow_to_be_2</bpmn:incoming>
+      <bpmn:outgoing>Flow_to_be_3</bpmn:outgoing>
+    </bpmn:task>
+    <bpmn:serviceTask id="to_be_bot" name="Intake validation bot">
+      <bpmn:incoming>Flow_to_be_3</bpmn:incoming>
+      <bpmn:outgoing>Flow_to_be_4</bpmn:outgoing>
+    </bpmn:serviceTask>
+    <bpmn:exclusiveGateway id="to_be_bot_g" name="Valid?" gatewayDirection="Diverging">
+      <bpmn:incoming>Flow_to_be_4</bpmn:incoming>
+      <bpmn:outgoing>Flow_to_be_5</bpmn:outgoing>
+      <bpmn:outgoing>Flow_to_be_6</bpmn:outgoing>
+    </bpmn:exclusiveGateway>
+    <bpmn:task id="to_be_s2" name="2 Validate request">
+      <bpmn:incoming>Flow_to_be_5</bpmn:incoming>
+      <bpmn:outgoing>Flow_to_be_7</bpmn:outgoing>
+    </bpmn:task>
+    <bpmn:exclusiveGateway id="to_be_g2" name="Information complete?" gatewayDirection="Diverging">
+      <bpmn:incoming>Flow_to_be_7</bpmn:incoming>
+      <bpmn:outgoing>Flow_to_be_8</bpmn:outgoing>
+      <bpmn:outgoing>Flow_to_be_9</bpmn:outgoing>
+    </bpmn:exclusiveGateway>
+    <bpmn:serviceTask id="to_be_triage" name="Triage recommendation (model)">
+      <bpmn:incoming>Flow_to_be_8</bpmn:incoming>
+      <bpmn:outgoing>Flow_to_be_10</bpmn:outgoing>
+    </bpmn:serviceTask>
+    <bpmn:exclusiveGateway id="to_be_priv" name="Privileged?" gatewayDirection="Diverging">
+      <bpmn:incoming>Flow_to_be_10</bpmn:incoming>
+      <bpmn:outgoing>Flow_to_be_11</bpmn:outgoing>
+      <bpmn:outgoing>Flow_to_be_12</bpmn:outgoing>
+    </bpmn:exclusiveGateway>
+    <bpmn:userTask id="to_be_s3" name="3 Line manager approval">
+      <bpmn:incoming>Flow_to_be_11</bpmn:incoming>
+      <bpmn:outgoing>Flow_to_be_13</bpmn:outgoing>
+    </bpmn:userTask>
+    <bpmn:exclusiveGateway id="to_be_g3" name="Information complete?" gatewayDirection="Diverging">
+      <bpmn:incoming>Flow_to_be_13</bpmn:incoming>
+      <bpmn:outgoing>Flow_to_be_14</bpmn:outgoing>
+      <bpmn:outgoing>Flow_to_be_15</bpmn:outgoing>
+    </bpmn:exclusiveGateway>
+    <bpmn:task id="to_be_s4" name="4 SoD / access-risk check">
+      <bpmn:incoming>Flow_to_be_12</bpmn:incoming>
+      <bpmn:incoming>Flow_to_be_14</bpmn:incoming>
+      <bpmn:outgoing>Flow_to_be_16</bpmn:outgoing>
+    </bpmn:task>
+    <bpmn:userTask id="to_be_s5" name="5 Entitlement owner approval">
+      <bpmn:incoming>Flow_to_be_16</bpmn:incoming>
+      <bpmn:outgoing>Flow_to_be_17</bpmn:outgoing>
+    </bpmn:userTask>
+    <bpmn:exclusiveGateway id="to_be_g5" name="Information complete?" gatewayDirection="Diverging">
+      <bpmn:incoming>Flow_to_be_17</bpmn:incoming>
+      <bpmn:outgoing>Flow_to_be_18</bpmn:outgoing>
+      <bpmn:outgoing>Flow_to_be_19</bpmn:outgoing>
+    </bpmn:exclusiveGateway>
+    <bpmn:exclusiveGateway id="to_be_priv2" name="Second approval required?" gatewayDirection="Diverging">
+      <bpmn:incoming>Flow_to_be_18</bpmn:incoming>
+      <bpmn:outgoing>Flow_to_be_20</bpmn:outgoing>
+      <bpmn:outgoing>Flow_to_be_21</bpmn:outgoing>
+    </bpmn:exclusiveGateway>
+    <bpmn:userTask id="to_be_second" name="Second approver confirmation">
+      <bpmn:incoming>Flow_to_be_20</bpmn:incoming>
+      <bpmn:outgoing>Flow_to_be_22</bpmn:outgoing>
+    </bpmn:userTask>
+    <bpmn:task id="to_be_s6" name="6 Provision access">
+      <bpmn:incoming>Flow_to_be_21</bpmn:incoming>
+      <bpmn:incoming>Flow_to_be_22</bpmn:incoming>
+      <bpmn:outgoing>Flow_to_be_23</bpmn:outgoing>
+      <bpmn:incoming>Flow_to_be_26</bpmn:incoming>
+    </bpmn:task>
+    <bpmn:task id="to_be_s7" name="7 Confirm access works">
+      <bpmn:incoming>Flow_to_be_23</bpmn:incoming>
+      <bpmn:outgoing>Flow_to_be_24</bpmn:outgoing>
+    </bpmn:task>
+    <bpmn:exclusiveGateway id="to_be_g7" name="Access works?" gatewayDirection="Diverging">
+      <bpmn:incoming>Flow_to_be_24</bpmn:incoming>
+      <bpmn:outgoing>Flow_to_be_25</bpmn:outgoing>
+      <bpmn:outgoing>Flow_to_be_26</bpmn:outgoing>
+    </bpmn:exclusiveGateway>
+    <bpmn:task id="to_be_s8" name="8 Close request">
+      <bpmn:incoming>Flow_to_be_25</bpmn:incoming>
+      <bpmn:outgoing>Flow_to_be_27</bpmn:outgoing>
+    </bpmn:task>
+    <bpmn:endEvent id="to_be_end" name="End">
+      <bpmn:incoming>Flow_to_be_27</bpmn:incoming>
+    </bpmn:endEvent>
+    <bpmn:sequenceFlow id="Flow_to_be_1" sourceRef="to_be_start" targetRef="to_be_merge" />
+    <bpmn:sequenceFlow id="Flow_to_be_2" sourceRef="to_be_merge" targetRef="to_be_s1" />
+    <bpmn:sequenceFlow id="Flow_to_be_3" sourceRef="to_be_s1" targetRef="to_be_bot" />
+    <bpmn:sequenceFlow id="Flow_to_be_4" sourceRef="to_be_bot" targetRef="to_be_bot_g" />
+    <bpmn:sequenceFlow id="Flow_to_be_5" sourceRef="to_be_bot_g" targetRef="to_be_s2" name="Valid" />
+    <bpmn:sequenceFlow id="Flow_to_be_6" sourceRef="to_be_bot_g" targetRef="to_be_merge" name="Invalid" />
+    <bpmn:sequenceFlow id="Flow_to_be_7" sourceRef="to_be_s2" targetRef="to_be_g2" />
+    <bpmn:sequenceFlow id="Flow_to_be_8" sourceRef="to_be_g2" targetRef="to_be_triage" name="Yes" />
+    <bpmn:sequenceFlow id="Flow_to_be_9" sourceRef="to_be_g2" targetRef="to_be_merge" name="No" />
+    <bpmn:sequenceFlow id="Flow_to_be_10" sourceRef="to_be_triage" targetRef="to_be_priv" />
+    <bpmn:sequenceFlow id="Flow_to_be_11" sourceRef="to_be_priv" targetRef="to_be_s3" name="Privileged" />
+    <bpmn:sequenceFlow id="Flow_to_be_12" sourceRef="to_be_priv" targetRef="to_be_s4" name="Not privileged" />
+    <bpmn:sequenceFlow id="Flow_to_be_13" sourceRef="to_be_s3" targetRef="to_be_g3" />
+    <bpmn:sequenceFlow id="Flow_to_be_14" sourceRef="to_be_g3" targetRef="to_be_s4" name="Yes" />
+    <bpmn:sequenceFlow id="Flow_to_be_15" sourceRef="to_be_g3" targetRef="to_be_merge" name="No" />
+    <bpmn:sequenceFlow id="Flow_to_be_16" sourceRef="to_be_s4" targetRef="to_be_s5" />
+    <bpmn:sequenceFlow id="Flow_to_be_17" sourceRef="to_be_s5" targetRef="to_be_g5" />
+    <bpmn:sequenceFlow id="Flow_to_be_18" sourceRef="to_be_g5" targetRef="to_be_priv2" name="Yes" />
+    <bpmn:sequenceFlow id="Flow_to_be_19" sourceRef="to_be_g5" targetRef="to_be_merge" name="No" />
+    <bpmn:sequenceFlow id="Flow_to_be_20" sourceRef="to_be_priv2" targetRef="to_be_second" name="Yes" />
+    <bpmn:sequenceFlow id="Flow_to_be_21" sourceRef="to_be_priv2" targetRef="to_be_s6" name="No" />
+    <bpmn:sequenceFlow id="Flow_to_be_22" sourceRef="to_be_second" targetRef="to_be_s6" />
+    <bpmn:sequenceFlow id="Flow_to_be_23" sourceRef="to_be_s6" targetRef="to_be_s7" />
+    <bpmn:sequenceFlow id="Flow_to_be_24" sourceRef="to_be_s7" targetRef="to_be_g7" />
+    <bpmn:sequenceFlow id="Flow_to_be_25" sourceRef="to_be_g7" targetRef="to_be_s8" name="Yes" />
+    <bpmn:sequenceFlow id="Flow_to_be_26" sourceRef="to_be_g7" targetRef="to_be_s6" name="No" />
+    <bpmn:sequenceFlow id="Flow_to_be_27" sourceRef="to_be_s8" targetRef="to_be_end" />
+    <bpmn:textAnnotation id="Annotation_to_be">
+      <bpmn:text>Model recommends only; human decides; blocked attempts logged</bpmn:text>
+    </bpmn:textAnnotation>
+  </bpmn:process>
+  <bpmn:collaboration id="Collaboration_to_be">
+    <bpmn:participant id="Participant_to_be" name="Access provisioning (synthetic)" processRef="Process_to_be" />
+  </bpmn:collaboration>
+  <bpmndi:BPMNDiagram id="Diagram_to_be">
+    <bpmndi:BPMNPlane id="Plane_to_be" bpmnElement="Collaboration_to_be">
+      <bpmndi:BPMNShape id="Participant_to_be_di" bpmnElement="Participant_to_be" isHorizontal="true">
+        <dc:Bounds x="50" y="40" width="3170" height="660" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Lane_to_be_requester_di" bpmnElement="Lane_to_be_requester" isHorizontal="true">
+        <dc:Bounds x="50" y="40" width="3170" height="110" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Lane_to_be_desk_di" bpmnElement="Lane_to_be_desk" isHorizontal="true">
+        <dc:Bounds x="50" y="150" width="3170" height="110" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Lane_to_be_line_di" bpmnElement="Lane_to_be_line" isHorizontal="true">
+        <dc:Bounds x="50" y="260" width="3170" height="110" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Lane_to_be_risk_di" bpmnElement="Lane_to_be_risk" isHorizontal="true">
+        <dc:Bounds x="50" y="370" width="3170" height="110" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Lane_to_be_owners_di" bpmnElement="Lane_to_be_owners" isHorizontal="true">
+        <dc:Bounds x="50" y="480" width="3170" height="110" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Lane_to_be_iam_di" bpmnElement="Lane_to_be_iam" isHorizontal="true">
+        <dc:Bounds x="50" y="590" width="3170" height="110" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="to_be_start_di" bpmnElement="to_be_start">
+        <dc:Bounds x="70" y="91" width="38" height="38" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="to_be_merge_di" bpmnElement="to_be_merge">
+        <dc:Bounds x="135" y="83" width="54" height="54" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="to_be_s1_di" bpmnElement="to_be_s1">
+        <dc:Bounds x="210" y="80" width="150" height="60" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="to_be_bot_di" bpmnElement="to_be_bot">
+        <dc:Bounds x="395" y="190" width="150" height="60" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="to_be_bot_g_di" bpmnElement="to_be_bot_g">
+        <dc:Bounds x="585" y="193" width="54" height="54" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="to_be_s2_di" bpmnElement="to_be_s2">
+        <dc:Bounds x="690" y="190" width="150" height="60" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="to_be_g2_di" bpmnElement="to_be_g2">
+        <dc:Bounds x="870" y="193" width="54" height="54" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="to_be_triage_di" bpmnElement="to_be_triage">
+        <dc:Bounds x="980" y="300" width="150" height="60" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="to_be_priv_di" bpmnElement="to_be_priv">
+        <dc:Bounds x="1200" y="303" width="54" height="54" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="to_be_s3_di" bpmnElement="to_be_s3">
+        <dc:Bounds x="1310" y="300" width="150" height="60" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="to_be_g3_di" bpmnElement="to_be_g3">
+        <dc:Bounds x="1490" y="303" width="54" height="54" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="to_be_s4_di" bpmnElement="to_be_s4">
+        <dc:Bounds x="1600" y="410" width="150" height="60" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="to_be_s5_di" bpmnElement="to_be_s5">
+        <dc:Bounds x="1800" y="520" width="150" height="60" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="to_be_g5_di" bpmnElement="to_be_g5">
+        <dc:Bounds x="1990" y="523" width="54" height="54" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="to_be_priv2_di" bpmnElement="to_be_priv2">
+        <dc:Bounds x="2100" y="523" width="54" height="54" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="to_be_second_di" bpmnElement="to_be_second">
+        <dc:Bounds x="2210" y="520" width="150" height="60" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="to_be_s6_di" bpmnElement="to_be_s6">
+        <dc:Bounds x="2420" y="630" width="150" height="60" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="to_be_s7_di" bpmnElement="to_be_s7">
+        <dc:Bounds x="2630" y="80" width="150" height="60" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="to_be_g7_di" bpmnElement="to_be_g7">
+        <dc:Bounds x="2810" y="83" width="54" height="54" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="to_be_s8_di" bpmnElement="to_be_s8">
+        <dc:Bounds x="2920" y="190" width="150" height="60" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="to_be_end_di" bpmnElement="to_be_end">
+        <dc:Bounds x="3130" y="201" width="38" height="38" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Annotation_to_be_di" bpmnElement="Annotation_to_be">
+        <dc:Bounds x="2620" y="715" width="580" height="70" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge id="Flow_to_be_1_di" bpmnElement="Flow_to_be_1">
+        <di:waypoint x="108" y="110" />
+        <di:waypoint x="122" y="110" />
+        <di:waypoint x="122" y="110" />
+        <di:waypoint x="135" y="110" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_to_be_2_di" bpmnElement="Flow_to_be_2">
+        <di:waypoint x="189" y="110" />
+        <di:waypoint x="200" y="110" />
+        <di:waypoint x="200" y="110" />
+        <di:waypoint x="210" y="110" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_to_be_3_di" bpmnElement="Flow_to_be_3">
+        <di:waypoint x="360" y="110" />
+        <di:waypoint x="378" y="110" />
+        <di:waypoint x="378" y="220" />
+        <di:waypoint x="395" y="220" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_to_be_4_di" bpmnElement="Flow_to_be_4">
+        <di:waypoint x="545" y="220" />
+        <di:waypoint x="565" y="220" />
+        <di:waypoint x="565" y="220" />
+        <di:waypoint x="585" y="220" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_to_be_5_di" bpmnElement="Flow_to_be_5">
+        <di:waypoint x="639" y="220" />
+        <di:waypoint x="664" y="220" />
+        <di:waypoint x="664" y="220" />
+        <di:waypoint x="690" y="220" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_to_be_6_di" bpmnElement="Flow_to_be_6">
+        <di:waypoint x="639" y="220" />
+        <di:waypoint x="669" y="220" />
+        <di:waypoint x="669" y="48" />
+        <di:waypoint x="105" y="48" />
+        <di:waypoint x="105" y="110" />
+        <di:waypoint x="135" y="110" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_to_be_7_di" bpmnElement="Flow_to_be_7">
+        <di:waypoint x="840" y="220" />
+        <di:waypoint x="855" y="220" />
+        <di:waypoint x="855" y="220" />
+        <di:waypoint x="870" y="220" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_to_be_8_di" bpmnElement="Flow_to_be_8">
+        <di:waypoint x="924" y="220" />
+        <di:waypoint x="952" y="220" />
+        <di:waypoint x="952" y="330" />
+        <di:waypoint x="980" y="330" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_to_be_9_di" bpmnElement="Flow_to_be_9">
+        <di:waypoint x="924" y="220" />
+        <di:waypoint x="954" y="220" />
+        <di:waypoint x="954" y="48" />
+        <di:waypoint x="105" y="48" />
+        <di:waypoint x="105" y="110" />
+        <di:waypoint x="135" y="110" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_to_be_10_di" bpmnElement="Flow_to_be_10">
+        <di:waypoint x="1130" y="330" />
+        <di:waypoint x="1165" y="330" />
+        <di:waypoint x="1165" y="330" />
+        <di:waypoint x="1200" y="330" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_to_be_11_di" bpmnElement="Flow_to_be_11">
+        <di:waypoint x="1254" y="330" />
+        <di:waypoint x="1282" y="330" />
+        <di:waypoint x="1282" y="330" />
+        <di:waypoint x="1310" y="330" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_to_be_12_di" bpmnElement="Flow_to_be_12">
+        <di:waypoint x="1254" y="330" />
+        <di:waypoint x="1427" y="330" />
+        <di:waypoint x="1427" y="440" />
+        <di:waypoint x="1600" y="440" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_to_be_13_di" bpmnElement="Flow_to_be_13">
+        <di:waypoint x="1460" y="330" />
+        <di:waypoint x="1475" y="330" />
+        <di:waypoint x="1475" y="330" />
+        <di:waypoint x="1490" y="330" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_to_be_14_di" bpmnElement="Flow_to_be_14">
+        <di:waypoint x="1544" y="330" />
+        <di:waypoint x="1572" y="330" />
+        <di:waypoint x="1572" y="440" />
+        <di:waypoint x="1600" y="440" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_to_be_15_di" bpmnElement="Flow_to_be_15">
+        <di:waypoint x="1544" y="330" />
+        <di:waypoint x="1574" y="330" />
+        <di:waypoint x="1574" y="48" />
+        <di:waypoint x="105" y="48" />
+        <di:waypoint x="105" y="110" />
+        <di:waypoint x="135" y="110" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_to_be_16_di" bpmnElement="Flow_to_be_16">
+        <di:waypoint x="1750" y="440" />
+        <di:waypoint x="1775" y="440" />
+        <di:waypoint x="1775" y="550" />
+        <di:waypoint x="1800" y="550" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_to_be_17_di" bpmnElement="Flow_to_be_17">
+        <di:waypoint x="1950" y="550" />
+        <di:waypoint x="1970" y="550" />
+        <di:waypoint x="1970" y="550" />
+        <di:waypoint x="1990" y="550" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_to_be_18_di" bpmnElement="Flow_to_be_18">
+        <di:waypoint x="2044" y="550" />
+        <di:waypoint x="2072" y="550" />
+        <di:waypoint x="2072" y="550" />
+        <di:waypoint x="2100" y="550" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_to_be_19_di" bpmnElement="Flow_to_be_19">
+        <di:waypoint x="2044" y="550" />
+        <di:waypoint x="2074" y="550" />
+        <di:waypoint x="2074" y="48" />
+        <di:waypoint x="105" y="48" />
+        <di:waypoint x="105" y="110" />
+        <di:waypoint x="135" y="110" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_to_be_20_di" bpmnElement="Flow_to_be_20">
+        <di:waypoint x="2154" y="550" />
+        <di:waypoint x="2182" y="550" />
+        <di:waypoint x="2182" y="550" />
+        <di:waypoint x="2210" y="550" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_to_be_21_di" bpmnElement="Flow_to_be_21">
+        <di:waypoint x="2154" y="550" />
+        <di:waypoint x="2287" y="550" />
+        <di:waypoint x="2287" y="660" />
+        <di:waypoint x="2420" y="660" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_to_be_22_di" bpmnElement="Flow_to_be_22">
+        <di:waypoint x="2360" y="550" />
+        <di:waypoint x="2390" y="550" />
+        <di:waypoint x="2390" y="660" />
+        <di:waypoint x="2420" y="660" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_to_be_23_di" bpmnElement="Flow_to_be_23">
+        <di:waypoint x="2570" y="660" />
+        <di:waypoint x="2600" y="660" />
+        <di:waypoint x="2600" y="110" />
+        <di:waypoint x="2630" y="110" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_to_be_24_di" bpmnElement="Flow_to_be_24">
+        <di:waypoint x="2780" y="110" />
+        <di:waypoint x="2795" y="110" />
+        <di:waypoint x="2795" y="110" />
+        <di:waypoint x="2810" y="110" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_to_be_25_di" bpmnElement="Flow_to_be_25">
+        <di:waypoint x="2864" y="110" />
+        <di:waypoint x="2892" y="110" />
+        <di:waypoint x="2892" y="220" />
+        <di:waypoint x="2920" y="220" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_to_be_26_di" bpmnElement="Flow_to_be_26">
+        <di:waypoint x="2864" y="110" />
+        <di:waypoint x="2889" y="110" />
+        <di:waypoint x="2889" y="735" />
+        <di:waypoint x="2395" y="735" />
+        <di:waypoint x="2395" y="660" />
+        <di:waypoint x="2420" y="660" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_to_be_27_di" bpmnElement="Flow_to_be_27">
+        <di:waypoint x="3070" y="220" />
+        <di:waypoint x="3100" y="220" />
+        <di:waypoint x="3100" y="220" />
+        <di:waypoint x="3130" y="220" />
+      </bpmndi:BPMNEdge>
+    </bpmndi:BPMNPlane>
+  </bpmndi:BPMNDiagram>
+</bpmn:definitions>
