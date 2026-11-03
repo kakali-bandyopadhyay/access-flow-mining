@@ -150,7 +150,7 @@ def summarise(results: list[list[dict[str, Any]]], spent: float, stopped: str | 
                      if r["recommendation"] is not None and r["recommendation"] != r["expected_recommendation"]})
     tokens_in = sum(r["input_tokens"] for rows in results for r in rows)
     tokens_out = sum(r["output_tokens"] for rows in results for r in rows)
-    return {"repeats": len(results), "per_repeat": per_repeat,
+    return {"rules_version": triage.RULES_VERSION, "repeats": len(results), "per_repeat": per_repeat,
             "recommendation_misses": [list(m) for m in misses],
             "total_cost_usd": round(spent, 6), "input_tokens": tokens_in, "output_tokens": tokens_out,
             "stopped": stopped}
@@ -176,7 +176,7 @@ def main() -> None:
           f"| total cost USD {summary['total_cost_usd']}")
     if summary["stopped"]:
         print(f"STOPPED: {summary['stopped']}")
-    print(f"results: {summary['out_dir']}")
+    print(f"rules {summary['rules_version']} | results: {summary['out_dir']}")
 
 
 if __name__ == "__main__":

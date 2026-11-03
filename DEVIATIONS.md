@@ -27,3 +27,9 @@
 - Issue: none of the ten privileged samples should be approved, so with a correct model the two-approver grant path is never reached in a real-model run (first evaluation, gpt-5.4-mini-2026-03-17, 3 repeats: 9/9 recommendations and 10/10 gate outcomes per repeat, 0 two-approver grants).
 - Change: added RQ-011 (ci-pipeline-admin, privileged, prior approval 30 of 180 days, manager and app owner confirmed, no conflict, no duplicate; expected approve, granted only after two different approvers). The ten pre-registered samples and their expectations are unchanged.
 - Effect: `eval_samples.py` scores the pre-registered ten and the added sample separately; the pre-registered result is reported first and is never combined with RQ-011.
+
+## 2026-11-03 - Triage rule v2: one outcome per condition
+- Where: `mcp/triage.py`, `_SYSTEM_RULES`; `RULES_VERSION` set to `v2` and written into every evaluation result.
+- Issue: rule v1.1 said an expired or incomplete approval, a conflict, a duplicate or a privileged request without approval "is 'escalate' or 'reject'", so it allowed either outcome. Run `20261103T081934Z` (rules v1.1, gpt-5.4-mini-2026-03-17, 3 repeats) returned 'reject' for RQ-007 (SoD conflict, expected 'escalate') in one repeat: pre-registered ten 26/27 recommendations, 30/30 gate outcomes; RQ-011 3/3 and 3/3. The gate outcome was correct in every case (no grant).
+- Change: each condition now maps to one outcome - 'reject' only for a duplicate; 'escalate' for expired or incomplete approval, a conflict, or a privileged request without a live, complete approval; 'approve' otherwise as before; precedence reject > escalate > approve. Checked against all eleven fixtures; no fixture changed.
+- Effect: v1.1 results stand as reported and are not replaced. v2 runs are reported separately, labelled by `rules_version`.

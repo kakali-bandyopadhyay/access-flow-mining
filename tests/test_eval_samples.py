@@ -90,3 +90,10 @@ def test_added_samples_are_scored_apart_from_the_preregistered_ten(tmp_path):
     summary = eval_samples.evaluate(fake("escalate"), repeats=1, out_dir=tmp_path)
     rep = summary["per_repeat"][0]
     assert rep["preregistered"]["samples"] == 10 and rep["added"]["samples"] == 1
+
+
+def test_results_record_the_rules_version(tmp_path):
+    summary = eval_samples.evaluate(fake("escalate"), repeats=1, out_dir=tmp_path)
+    assert summary["rules_version"] == triage.RULES_VERSION
+    saved = json.loads((tmp_path / "results.json").read_text(encoding="utf-8"))
+    assert saved["summary"]["rules_version"] == triage.RULES_VERSION
