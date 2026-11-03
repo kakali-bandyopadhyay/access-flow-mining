@@ -6,7 +6,7 @@ All observations, scenarios and results here are synthetic. This study evaluates
 
 ## Define
 
-The question is whether an owner-share classifier recovers the planted delay owner across four parameter scenarios, and whether the traces surface intake validation as a plausible automation target. The rule, generator parameters and acceptance bands were fixed in `PREREGISTRATION-ANALYSIS.md` before production generation. The MCP data plumbing supplies facts for exception triage; it makes no model calls and implements no gate decision.
+The question is whether an owner-share classifier recovers the planted delay owner across four parameter scenarios, and whether the traces surface intake validation as a plausible automation target. The rule, generator parameters and acceptance bands were fixed in `PREREGISTRATION-ANALYSIS.md` before production generation. The MCP server supplies policy, prior-approval and segregation-of-duties facts; a separate triage step (`mcp/triage.py`) asks a model for a recommendation only, and a human approval gate decides: it refuses unregistered entitlements and self-approval before any model call, requires two confirmations from different approvers (neither the requester) for privileged entitlements (six of the ten sample requests: RQ-002 and RQ-006 to RQ-010), logs every blocked attempt, and executes each request at most once.
 
 ## Measure
 

@@ -26,6 +26,10 @@ The four cells classify as intended: A1 and A2 are APPROVER-BOUND, B1 and B2 are
 
 The hold-removed analysis classifies all four cells correctly; the jitter analysis classifies `20` of `20` cases correctly with margin, ranging from `3.455609557239851` to `8.730539725279423`. The synthetic value model reports payback of `9.86477688185506` months and 36-month NPV of `$21926.738826523913`.
 
+## Exception triage gate
+
+`mcp/triage.py` uses the model for a recommendation only; a human gate decides, with one confirmation for standard entitlements and two from different approvers (neither the requester) for privileged ones (RQ-002 and RQ-006 to RQ-010 of the ten samples), refuses unregistered entitlements before any model call, logs every blocked attempt, and executes each request at most once (`tests/test_gate.py`).
+
 ## Limits
 
 The model uses fixed queue parameters rather than staffing capacity, a sequential path, at most two rework loops, weekends but no public holidays, and one process represented by four parameter scenarios. The hold reinforces the planted owner signal by design. See `CASE_STUDY.md` and Part B §9 of the pre-registration for the full limitations.

@@ -2,8 +2,13 @@
 
 Order of operations, and it is the order in this file:
 
-    early_check -> gather_evidence -> recommend -> (a human decides)
-                -> confirm -> execute
+    early_check -> check_registered -> gather_evidence -> recommend -> (a human decides)
+                -> confirm [-> second confirm, privileged tier] -> execute
+
+Every blocked attempt (self-approval, a repeated approver) writes one audit line
+before it raises, so a refused attempt is evidence, not silence. ``execute`` is
+idempotent per request: a second call returns the first grant, grants nothing,
+and logs the suppressed decision.
 
 The two identity checks are plain comparisons in this module. Nothing the model
 returns is ever compared to an identity, and nothing it returns can reach
@@ -19,6 +24,7 @@ from __future__ import annotations
 
 import datetime as dt
 import json
+import re
 from dataclasses import dataclass, field
 from pathlib import Path
 from typing import Any, Callable
@@ -47,6 +53,10 @@ class GateNotSatisfied(PermissionError):
     """Action attempted without a sealed confirmation from a human decision."""
 
 
+class DuplicateApprover(PermissionError):
+    """The second confirmation on a privileged request came from the first approver."""
+
+
 # A private seal: only confirm() can mint a record that execute() accepts.
 _SEAL = object()
 
@@ -69,6 +79,11 @@ class Confirmation:
     decided_at: str
     permitted: bool
     cost_usd: float = 0.0
+    privileged: bool = False
+    approvers: tuple[str, ...] = ()
+    # Set by confirm() only. init=False: dataclasses.replace() cannot carry or
+    # retarget it, so a copied record has no log and execute() refuses it.
+    log_path: Path | None = field(default=None, init=False, repr=False, compare=False)
     seal: object = field(default=None, repr=False, compare=False)
 
     def __post_init__(self) -> None:
@@ -82,22 +97,25 @@ class Confirmation:
 # gate B — the pre-assigned approver, checked before any tool call
 # ---------------------------------------------------------------------------
 
-def early_check(request: dict[str, Any]) -> None:
+def early_check(request: dict[str, Any], log_path: str | Path = DEFAULT_AUDIT_LOG) -> None:
     """Block a request whose pre-assigned approver is the requester (gate B).
 
     Two field shapes are accepted: the fixture's boolean flag, and an explicit
     pre-assigned approver id if one is ever added. Both are plain comparisons.
+    A blocked attempt is logged before raising.
     """
     requester = request.get("requester")
+    reason = None
     if request.get("approver_preassigned_is_requester"):
-        raise SelfApprovalBlocked(
-            f"{request.get('id')}: pre-assigned approver is the requester ({requester})"
-        )
-    preassigned = request.get("preassigned_approver_id")
-    if preassigned is not None and preassigned == requester:
-        raise SelfApprovalBlocked(
-            f"{request.get('id')}: pre-assigned approver id equals requester ({requester})"
-        )
+        reason = f"{request.get('id')}: pre-assigned approver is the requester ({requester})"
+    else:
+        preassigned = request.get("preassigned_approver_id")
+        if preassigned is not None and preassigned == requester:
+            reason = f"{request.get('id')}: pre-assigned approver id equals requester ({requester})"
+    if reason is not None:
+        _log_blocked(log_path, request, request.get("preassigned_approver_id") or requester,
+                     "gate_b_preassigned_self_approval", reason)
+        raise SelfApprovalBlocked(reason)
 
 
 # ---------------------------------------------------------------------------
@@ -183,9 +201,13 @@ def build_prompt(request: dict[str, Any], evidence: dict[str, Any]) -> str:
     )
 
 
+_TAG = re.compile(r"<\s*/?\s*justification\s*>", re.IGNORECASE)
+
+
 def _as_data(text: str, limit: int = 2000) -> str:
-    """Neutralise the closing tag so quoted text cannot break out of its block."""
-    return text[:limit].replace("</justification>", "")
+    """Remove any opening or closing justification tag, in any case or spacing,
+    so quoted text cannot break out of (or nest inside) its block."""
+    return _TAG.sub("", text[:limit])
 
 
 def _normalise(raw: Any) -> tuple[str, str, float]:
@@ -235,49 +257,115 @@ def recommend(request: dict[str, Any], evidence: dict[str, Any], model_fn: Model
 # gate A — the confirming human, and the audit line
 # ---------------------------------------------------------------------------
 
+class UnregisteredEntitlement(GateNotSatisfied):
+    """The entitlement has no registered policy. The gate cannot classify it, so it refuses."""
+
+
+def is_privileged(request: dict[str, Any]) -> bool:
+    """Privileged if the registered policy tier says so, or the request is filed as privileged.
+
+    Fails closed: an entitlement with no registered policy raises instead of
+    being treated as standard.
+    """
+    policy = lookup_policy(request["entitlement"])
+    if not policy.get("found"):
+        raise UnregisteredEntitlement(
+            f"{request.get('id')}: entitlement {request.get('entitlement')!r} has no registered policy"
+        )
+    return policy.get("tier") == "privileged" or request.get("case_type") == "privileged"
+
+
+def check_registered(request: dict[str, Any], log_path: str | Path, approver_id: Any,
+                     recommendation: str | None = None) -> bool:
+    """is_privileged(), with an unregistered entitlement logged as blocked before it raises."""
+    try:
+        return is_privileged(request)
+    except UnregisteredEntitlement as exc:
+        _log_blocked(log_path, request, approver_id, "unregistered_entitlement", str(exc), recommendation)
+        raise
+
+
 def confirm(
     request: dict[str, Any],
     recommendation: dict[str, Any],
     approver_id: str,
     human_decision: str,
     log_path: str | Path = DEFAULT_AUDIT_LOG,
+    prior: Confirmation | None = None,
 ) -> Confirmation:
     """Check the confirming human, write one audit line, return a sealed record.
 
-    The identity check runs before the log write, so a blocked self-approval
-    leaves nothing behind.
+    Standard tier: one human decision is enough. Privileged tier: the first
+    confirmation is recorded but does not permit action; pass it as ``prior``
+    to a second confirm() by a different approver. A blocked attempt (the
+    requester, or the first approver again) is logged, then raised.
     """
     if human_decision not in DECISIONS:
         raise ValueError(f"human_decision must be one of {sorted(DECISIONS)}, got {human_decision!r}")
-
-    requester = request["requester"]
-    if approver_id == requester:
-        raise SelfApprovalBlocked(
-            f"{request.get('id')}: confirming approver {approver_id} is the requester"
+    if recommendation.get("request_id") != request["id"]:
+        raise ValueError(
+            f"recommendation is for {recommendation.get('request_id')!r}, not {request['id']!r}"
         )
 
+    requester = request["requester"]
     rec = recommendation.get("recommendation", "escalate")
     if rec not in ALLOWED:
         rec = "escalate"
 
-    decided_at = dt.datetime.now(dt.UTC).isoformat(timespec="seconds").replace("+00:00", "Z")
-    permitted = human_decision == "confirm"
+    if approver_id == requester:
+        event = "gate_a_self_approval_second" if prior is not None else "gate_a_self_approval_first"
+        reason = f"{request.get('id')}: confirming approver {approver_id} is the requester"
+        _log_blocked(log_path, request, approver_id, event, reason, rec)
+        raise SelfApprovalBlocked(reason)
+
+    privileged = check_registered(request, log_path, approver_id, rec)
+    if prior is not None:
+        if not isinstance(prior, Confirmation):
+            raise GateNotSatisfied("prior must be a Confirmation from confirm()")
+        if not privileged:
+            raise ValueError(f"{request['id']}: a second confirmation applies to privileged requests only")
+        if prior.request_id != request["id"]:
+            raise ValueError(f"prior confirmation is for {prior.request_id!r}, not {request['id']!r}")
+        if prior.human_decision != "confirm" or len(prior.approvers) != 1:
+            raise GateNotSatisfied(
+                f"{request['id']}: prior must be a single confirmed first approval"
+            )
+        if approver_id in prior.approvers:
+            reason = f"{request['id']}: second approver {approver_id} already gave the first approval"
+            _log_blocked(log_path, request, approver_id, "duplicate_approver", reason, rec)
+            raise DuplicateApprover(reason)
+
+    approvers = (prior.approvers if prior is not None else ()) + (approver_id,)
+    if not privileged:
+        stage = "single"
+    elif prior is None:
+        stage = "first_of_two"
+    else:
+        stage = "second_of_two"
+
+    decided_at = _now()
+    permitted = human_decision == "confirm" and (not privileged or len(set(approvers)) >= 2)
+    cost = float(recommendation.get("cost_usd", 0.0) or 0.0)
 
     _append_log(
         log_path,
         {
+            "event": "decision",
             "request_id": request["id"],
             "requester": requester,
             "recommendation": rec,
             "approver_id": approver_id,
+            "approvers": list(approvers),
+            "privileged": privileged,
+            "stage": stage,
             "human_decision": human_decision,
             "permitted": permitted,
             "decided_at": decided_at,
-            "cost_usd": recommendation.get("cost_usd", 0.0),
+            "cost_usd": cost,
         },
     )
 
-    return Confirmation(
+    record = Confirmation(
         request_id=request["id"],
         requester=requester,
         recommendation=rec,
@@ -285,17 +373,79 @@ def confirm(
         human_decision=human_decision,
         decided_at=decided_at,
         permitted=permitted,
-        cost_usd=float(recommendation.get("cost_usd", 0.0) or 0.0),
+        cost_usd=cost,
+        privileged=privileged,
+        approvers=approvers,
         seal=_SEAL,
     )
+    object.__setattr__(record, "log_path", Path(log_path))
+    return record
+
+
+def _now() -> str:
+    return dt.datetime.now(dt.UTC).isoformat(timespec="microseconds").replace("+00:00", "Z")
+
+
+def _log_blocked(log_path: str | Path, request: dict[str, Any], approver_id: Any,
+                 event: str, reason: str, recommendation: str | None = None) -> None:
+    """One audit line for a refused attempt. Written before the exception is raised."""
+    _append_log(
+        log_path,
+        {
+            "event": event,
+            "request_id": request.get("id"),
+            "requester": request.get("requester"),
+            "approver_id": approver_id,
+            "recommendation": recommendation,
+            "permitted": False,
+            "blocked": True,
+            "reason": reason,
+            "decided_at": _now(),
+        },
+    )
+
+
+def _read_log(log_path: str | Path) -> list[dict[str, Any]]:
+    """Parse the log. A torn (half-written) line is kept as {"torn": raw} rather than
+    raising, so one bad write cannot disable execute() for every request."""
+    path = Path(log_path)
+    if not path.exists():
+        return []
+    out: list[dict[str, Any]] = []
+    for line in path.read_text(encoding="utf-8").splitlines():
+        if not line.strip():
+            continue
+        try:
+            out.append(json.loads(line))
+        except json.JSONDecodeError:
+            out.append({"torn": line})
+    return out
+
+
+def _already_executed(lines: list[dict[str, Any]], request_id: str) -> dict[str, Any] | None:
+    """The earlier execution line for this request, if any. Fails closed on a torn
+    line that names this request and an execution: it counts as executed."""
+    for line in lines:
+        if line.get("event") == "executed" and line.get("request_id") == request_id:
+            return line
+        raw = line.get("torn")
+        if raw and '"executed"' in raw and f'"{request_id}"' in raw:
+            return {"request_id": request_id, "torn": True}
+    return None
 
 
 def _append_log(log_path: str | Path, record: dict[str, Any]) -> None:
     """Append one JSON line. Never rewrite, never reorder, never truncate."""
     path = Path(log_path)
     path.parent.mkdir(parents=True, exist_ok=True)
+    prefix = ""
+    if path.exists() and path.stat().st_size:
+        with path.open("rb") as existing:
+            existing.seek(-1, 2)
+            if existing.read(1) != b"\n":
+                prefix = "\n"  # isolate a torn last line so this record stays parseable
     with path.open("a", encoding="utf-8") as handle:
-        handle.write(json.dumps(record, sort_keys=True) + "\n")
+        handle.write(prefix + json.dumps(record, sort_keys=True) + "\n")
 
 
 # ---------------------------------------------------------------------------
@@ -303,22 +453,72 @@ def _append_log(log_path: str | Path, record: dict[str, Any]) -> None:
 # ---------------------------------------------------------------------------
 
 def execute(record: Any) -> dict[str, Any]:
-    """Perform the action. Refuses unless a human confirmed, in a sealed record."""
+    """Perform the action. Refuses unless a human confirmed, in a sealed record.
+
+    Idempotent per request: if the audit log already holds an ``executed`` line
+    for this request, the earlier grant is returned with ``already_executed``,
+    nothing new is granted, and one ``execution_suppressed`` line records which
+    decision was suppressed and which grant it deferred to. The log is always the one confirm()
+    wrote for this record; there is no override and no fallback path, so the
+    same record cannot be granted again against a different log.
+    """
     if not isinstance(record, Confirmation):
         raise GateNotSatisfied(
             "execute() takes a Confirmation from confirm(), "
             f"not {type(record).__name__}. A model recommendation is not a permission."
         )
-    if record.human_decision != "confirm" or not record.permitted:
+    if record.human_decision != "confirm":
         raise GateNotSatisfied(
             f"{record.request_id}: human decision was {record.human_decision!r}; no action taken"
         )
-    return {
+    if record.privileged and len(record.approvers) < 2:
+        raise GateNotSatisfied(
+            f"{record.request_id}: privileged request awaiting a second approver; no action taken"
+        )
+    if not record.permitted:
+        raise GateNotSatisfied(f"{record.request_id}: record does not permit action")
+    if record.log_path is None:
+        raise GateNotSatisfied(f"{record.request_id}: record has no audit log; it was not issued by confirm()")
+    if record.privileged and (
+        len(set(record.approvers)) < 2 or record.requester in record.approvers
+    ):
+        raise GateNotSatisfied(
+            f"{record.request_id}: privileged access needs two different approvers, neither the requester"
+        )
+
+    path = record.log_path
+    earlier = _already_executed(_read_log(path), record.request_id)
+    if earlier is not None:
+        _append_log(path, {
+            "event": "execution_suppressed",
+            "request_id": record.request_id,
+            "approvers": list(record.approvers),
+            "decided_at": record.decided_at,
+            "earlier_approvers": earlier.get("approvers", []),
+            "earlier_decided_at": earlier.get("decided_at"),
+            "earlier_torn": bool(earlier.get("torn")),
+            "reason": "request already executed; this decision granted nothing",
+            "suppressed_at": _now(),
+        })
+        return {
+            "request_id": record.request_id,
+            "action": "granted",
+            "approver_id": earlier.get("approver_id"),
+            "approvers": earlier.get("approvers", []),
+            "decided_at": earlier.get("decided_at"),
+            "already_executed": True,
+        }
+
+    result = {
         "request_id": record.request_id,
         "action": "granted",
         "approver_id": record.approver_id,
+        "approvers": list(record.approvers),
         "decided_at": record.decided_at,
+        "already_executed": False,
     }
+    _append_log(path, {"event": "executed", **result, "executed_at": _now()})
+    return result
 
 
 # ---------------------------------------------------------------------------
@@ -331,16 +531,29 @@ def run(
     approver_id: str,
     human_decision: str,
     log_path: str | Path = DEFAULT_AUDIT_LOG,
+    second_approver_id: str | None = None,
+    second_decision: str | None = None,
 ) -> dict[str, Any]:
-    """early_check -> gather_evidence -> recommend -> confirm -> execute."""
+    """early_check -> check_registered -> gather_evidence -> recommend -> confirm
+    [-> second confirm] -> execute."""
     request = get_request(request_id)
     if request is None:
         raise LookupError(f"no such request: {request_id}")
 
-    early_check(request)                                    # gate B
+    if (second_approver_id is None) != (second_decision is None):
+        raise ValueError("second_approver_id and second_decision are given together or not at all")
+
+    early_check(request, log_path)                          # gate B
+    privileged = check_registered(request, log_path, approver_id)   # before any tool or model call
+    if second_approver_id is not None and not privileged:
+        raise ValueError(f"{request_id}: a second approver applies to privileged requests only")
     evidence = gather_evidence(request)
     recommendation = recommend(request, evidence, model_fn)
     confirmation = confirm(request, recommendation, approver_id, human_decision, log_path)
+    if (confirmation.privileged and confirmation.human_decision == "confirm"
+            and second_approver_id is not None):
+        confirmation = confirm(request, recommendation, second_approver_id,
+                               second_decision, log_path, prior=confirmation)
     if not confirmation.permitted:
         return {"request": request, "recommendation": recommendation, "action": None}
     action = execute(confirmation)
