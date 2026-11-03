@@ -1,38 +1,42 @@
 # Synthetic case study: access-flow mining
 
-All observations, scenarios and results here are synthetic. This study evaluates a pre-registered process-mining method on generated traces; it is a method test, not evidence about a live operation.
+All data and results here are synthetic. This study evaluates a pre-registered process-mining method on generated traces; it is a method test, not evidence about a live operation.
 
 > “This tests the method, not the process.”
 
 ## Define
 
-The question is whether an owner-share classifier recovers the planted delay owner across four parameter scenarios, and whether the traces surface intake validation as a plausible automation target. The rule, generator parameters and acceptance bands were fixed in `PREREGISTRATION-ANALYSIS.md` before production generation. The MCP server supplies policy, prior-approval and segregation-of-duties facts; a separate triage step (`mcp/triage.py`) asks a model for a recommendation only, and a human approval gate decides: it refuses unregistered entitlements and self-approval before any model call, requires two confirmations from different approvers (neither the requester) for privileged entitlements (six of the ten pre-registered sample requests, RQ-002 and RQ-006 to RQ-010, plus RQ-011, added after pre-registration so the two-approver grant path is exercised), logs every blocked attempt, and executes each request at most once.
+The question is whether an owner-share classifier recovers the planted delay owner across four parameter scenarios, and whether the traces surface intake validation as a plausible automation target. The rule, generator parameters, and acceptance bands were fixed in `PREREGISTRATION-ANALYSIS.md` before production generation. The MCP server supplies policy, prior-approval, and segregation-of-duties facts; the triage model recommends only, and the human gate decides. It blocks unregistered entitlements and self-approval before any model call, requires two confirmations from different approvers (neither the requester) for privileged grants, logs blocked attempts, and executes each request at most once.
 
 ## Measure
 
-Each cell contains `2000` synthetic cases. A1 and A2 classify as APPROVER-BOUND with margins `4.109527601495121` and `4.021267557523499`; B1 and B2 classify as HANDOFF-BOUND with margins `8.214814129250245` and `8.104614825487483`. The owner classification is correct in all four cells, while conformance to the exact eight-step trace is `0.9445`, `0.774`, `0.9435`, and `0.771` respectively. Rework loop rates are `0.04`, `0.18`, `0.04`, and `0.18`. Wait shares range from `0.9604146492279041` to `0.9628659620041152`.
+Each cell contains 2,000 synthetic cases. A1 and A2 classify as APPROVER-BOUND with margins 4.11 and 4.02; B1 and B2 classify as HANDOFF-BOUND with margins 8.21 and 8.10. The owner classification is correct in all four cells. Exact-path conformance is 94.45%, 77.40%, 94.35%, and 77.10%; loop rates are 4.00%, 18.00%, 4.00%, and 18.00%. Wait shares range from 96.04% to 96.29%.
 
-The A1 and A2 p95 calendar times are `20.28373032407407` and `20.17682291666665` days; both MISS the registered `16–20` day band. B1 (`18.77213599537037` days) and B2 (`18.339107638888883` days) are within the band. This is the production-build reproduction difference logged in `DEVIATIONS.md`; no parameters were tuned, and the registered classification pass condition remains satisfied.
+The A1 and A2 p95 calendar times are 20.28 and 20.18 days; both MISS the registered 16–20 day band. B1 (18.77 days) and B2 (18.34 days) PASS. This production-build reproduction difference is logged in `DEVIATIONS.md`; no parameters were tuned, and the registered classification pass condition remains satisfied.
 
 ## Analyse
 
-Approval ownership accounts for `0.7786400245046847` of A1 component time and `0.7751636294147489` of A2. Handoff ownership accounts for `0.8634332724259496` of B1 and `0.8600917652886751` of B2. Step-5 entitlement-owner approval queue is the largest reported A-cell component (`57976.09166666667` summed business hours in A1). The hold placement follows the logged interpretation of Part B Table 3, “Hold”: “attached by argmax of queue plus handoff in that scenario's table”. Applying Part B §9 item 6 places the hold on the scenario’s largest component: A cells use the step-5 queue (mean `20.34` h), and B cells use step-5 handoff (mean `6.01` h). Accordingly, A cells did not change from P2; B-cell holds moved from step-5 queue to step-5 handoff. `DEVIATIONS.md` records that all four classifications remain correct under both placements. The hold reinforces the planted signal by design; the hold-removed run still classifies all four cells correctly, with margins `2.9384608926223206`, `2.810689950042037`, `6.136934760975785`, and `6.221963219600613`.
+Approval ownership accounts for 77.86% of A1 component time and 77.52% of A2. Handoff ownership accounts for 86.34% of B1 and 86.01% of B2. The step-5 entitlement-owner approval queue is the largest reported A-cell component (57,976.09 summed business hours in A1). Part B Table 3 says “Hold” is “attached by argmax of queue plus handoff in that scenario's table”; applying Part B §9 item 6 places the hold on each scenario’s largest component: the step-5 queue in A cells (mean 20.34 h) and step-5 handoff in B cells (mean 6.01 h). A cells were unchanged from P2; B-cell placement moved from queue to handoff. `DEVIATIONS.md` records correct classification under both placements. With the hold removed, all four cells still classify correctly; margins range from 2.81× to 6.22×.
+
+The exploratory PM4Py miner recovered both A2 loop types from the event log: information returns to step 1 after steps 2, 3, and 5, and provisioning failure returns step 7 to step 6. The written as-is BPMN uses one merge gateway before Submit request; see [`FINDINGS.md`](FINDINGS.md) for loop counts and the PM4Py fitness table.
 
 ## Improve
 
-The generated traces identify intake validation as the bot target. The value model estimates annual savings of `683.2` hours (`560.0` direct handling hours and `123.19999999999999` avoided rework hours), worth `$15030.400000000001` per year. The modeled payback is `9.86477688185506` months and 36-month NPV is `$21926.738826523913`. These are synthetic scenario estimates, not a committed business case.
+The generated traces identify intake validation as a plausible bot target. The UiPath demonstration checks required fields, registered entitlements, independent manager, justification length, and duplicate requests; it classified 12 of 20 synthetic requests as valid and returned 8 for correction. It demonstrates the five checks on sample data, not a production control.
+
+The to-be BPMN adds an intake-validation bot between submission and service-desk validation, a triage recommendation before approval, a privileged-request gateway, and a second approver confirmation after entitlement-owner approval. The annotation states: “Model recommends only; human decides; blocked attempts logged”. The synthetic value model estimates 683.20 saved hours per year, worth `$15,030` annually, with 9.86 months to payback and `$21,927` 36-month NPV. These are scenario estimates, not a committed business case. The gain is deliberately small: the bot removes intake touch time and the resubmission loops it prevents, and leaves the approval and handoff waits alone, so the SLA breach rate does not change. The delay itself sits with approvers or handoffs, which is what the classifier found.
 
 ## Control
 
-Use the monitoring plan in `lean/control_plan.md` to monitor validation touch, cycle-time tails, rework, conformance, and classifier stability. Escalate the two A-cell p95 band misses for review; do not change the registered parameters based on this run. The classifier and synthetic traces do not authorize production decisions.
+Use [`lean/control_plan.md`](lean/control_plan.md) to monitor validation touch, cycle-time tails, rework, conformance, and classifier stability. Escalate the two A-cell p95 band misses for review; do not change registered parameters based on this run. The classifier and synthetic traces do not authorize production decisions.
 
 ## Limitations (Part B §9)
 
-1. **Queues are parameters, not capacity.** A team's queue is set by assumption, not derived from arrivals against staffing. The `20.34`-hour app-owner queue stands in for senior reviewers who look at requests in batches. Capacity modelling is out of scope and is the named follow-up.
-2. **Sequential path only.** The designed path runs 1 to 8 in order; no parallel SoD or manager step.
-3. **Rework is capped at two loops** per case.
+1. **Queues are parameters, not capacity.** A team's queue is set by assumption, not derived from arrivals against staffing. The 20.34-hour app-owner queue stands in for senior reviewers who look at requests in batches. Capacity modelling is out of scope and is the named follow-up.
+2. **Sequential path only.** The designed path runs steps 1 to 8 in order; no parallel SoD or manager step.
+3. **Rework is capped at two loops per case.**
 4. **Public holidays are out of scope.** Weekends only in all three regions; a live deployment loads the HR calendar.
-5. **One process, four universes.** The four scenarios are the same process under four sets of parameters, not four teams.
-6. **The hold reinforces the planted signal by design.** The 80-hour hold attaches to each scenario's largest component, so it widens the margin of whichever owner was already largest. That is a bias in the generator, stated openly, and §1.3 is the answer to it: with the hold removed entirely, margins are `2.56×–6.92×` and all four cells still classify correctly. The hold makes the tail realistic; it does not make the verdict.
+5. **One process, four universes.** The scenarios represent the same process under four parameter sets, not four teams.
+6. **The hold reinforces the planted signal by design.** The 80-hour hold attaches to each scenario's largest component, widening the margin of whichever owner was already largest. This generator bias is stated openly. With the hold removed, margins are 2.81×–6.22× and all four cells still classify correctly. The hold makes the tail realistic; it does not make the verdict.
 
-`mcp/triage.py` is designed by the author, implemented with AI assistance, reviewed line by line.
+The triage gate was designed by the author, implemented with AI assistance, and reviewed line by line. The BPMN diagrams were generated by a script written by the author with AI assistance and reviewed in demo.bpmn.io. The UiPath intake-validation bot was designed by the author, implemented with AI assistance and reviewed in UiPath Studio.

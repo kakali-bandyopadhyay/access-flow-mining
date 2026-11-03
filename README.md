@@ -2,6 +2,10 @@
 
 All data and results are synthetic. This repository demonstrates process mining of a technology access-provisioning workflow, tests an owner-classification method, and models potential intake-validation automation value. The estimates do not describe a real organization or operational process.
 
+## Repository map
+
+`src/flowmining/` mining, classifier and value model · `analysis/` scripts, results, hand-trace and PM4Py cross-check · `data/` synthetic event logs and calendar · `mcp/` reference-data server, triage gate and evaluation · `lean/` BPMN, value stream map, control plan · `uipath/IntakeValidationBot/` intake-validation bot · `tests/` pytest suite.
+
 ## Setup
 
 From the repository root:
@@ -22,9 +26,13 @@ SHA-256 of `PREREGISTRATION-ANALYSIS.md`: `8B2064C477F1022AC9DF69364C56B88C0B502
 
 ## Synthetic results
 
-The four cells classify as intended: A1 and A2 are APPROVER-BOUND, B1 and B2 are HANDOFF-BOUND. Their margins are `4.109527601495121`, `4.021267557523499`, `8.214814129250245`, and `8.104614825487483`. The two A-cell p95 calendar times are `20.28373032407407` and `20.17682291666665` days and miss the registered `16–20` day band; B1 and B2 are `18.77213599537037` and `18.339107638888883` days. These are reported without tuning. Hold interpretation and this reproduction difference are recorded in `DEVIATIONS.md`.
+The four cells classify as intended: A1 and A2 are APPROVER-BOUND, B1 and B2 are HANDOFF-BOUND, with margins 4.11, 4.02, 8.21, and 8.10. The A-cell p95 calendar times are 20.28 and 20.18 days and MISS the registered 16–20 day band; B1 and B2 are 18.77 and 18.34 days and PASS. These results are reported without tuning. Hold interpretation and the reproduction difference are recorded in `DEVIATIONS.md`.
 
-The hold-removed analysis classifies all four cells correctly; the jitter analysis classifies `20` of `20` cases correctly with margin, ranging from `3.455609557239851` to `8.730539725279423`. The synthetic value model reports payback of `9.86477688185506` months and 36-month NPV of `$21926.738826523913`.
+The hold-removed analysis classifies all four cells correctly. The jitter analysis classifies 20 of 20 cell-runs correctly with margin, ranging from 3.46 to 8.73. The synthetic value model reports payback of 9.86 months and 36-month NPV of `$21,927`.
+
+## How to run the bot
+
+Open `uipath/IntakeValidationBot/project.json` in UiPath Studio and press **F5**. The sample workflow reads `Data/intake_requests.csv` and `Data/entitlements.csv`, then writes `Output/valid.csv` and `Output/returned.csv`. The included fixture run has 12 valid and 8 returned requests out of 20; this is a synthetic demonstration.
 
 ## Exception triage gate
 
@@ -41,8 +49,14 @@ python mcp/eval_samples.py          # all samples, 3 repeats, stops above USD 0.
 
 Each run writes `mcp/runs/<UTC stamp>/` (git-ignored): one audit log per repeat and `results.json`, which records `rules_version`. The ten pre-registered samples and RQ-011 are scored separately. Results by run are in `FINDINGS.md`; rule changes are in `DEVIATIONS.md`.
 
+## Intake-validation bot (UiPath)
+
+Open `uipath/IntakeValidationBot/project.json` in UiPath Studio (Community edition, VB.NET expressions) and run `Main.xaml`. It reads `Data/intake_requests.csv` (20 synthetic requests), applies five rules (required fields, registered entitlement, manager distinct from requester, justification of at least 20 characters, no duplicate request), and writes `Output/valid.csv` (12 rows) and `Output/returned.csv` (8 rows, each with every rule it failed). It is a demonstration on fixtures, not a production control.
+
 ## Limits
 
 The model uses fixed queue parameters rather than staffing capacity, a sequential path, at most two rework loops, weekends but no public holidays, and one process represented by four parameter scenarios. The hold reinforces the planted owner signal by design. See `CASE_STUDY.md` and Part B §9 of the pre-registration for the full limitations.
 
 PM4Py used: yes, as an exploratory cross-check only (`analysis/pm4py_crosscheck.py`: Inductive Miner discovery and alignment-based conformance). The pre-registered analysis uses pandas. PM4Py is an optional dependency (`requirements-optional.txt`, AGPL-3.0 licence); it is imported only by the cross-check script.
+
+Repository map: `src/` contains the analysis package; `analysis/` scripts and saved results; `data/` synthetic inputs; `lean/` BPMN diagrams and control plan; `mcp/` the policy-data server and triage demonstration; `uipath/IntakeValidationBot/` the attended intake-validation workflow.
