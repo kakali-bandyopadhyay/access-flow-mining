@@ -1,0 +1,25 @@
+case_id,activity,lifecycle,timestamp,resource,team,timezone
+A1-C0007,Submit request,schedule,2026-03-20T13:16:00+05:30,RQ-IN-01,requester_india,Asia/Kolkata
+A1-C0007,Submit request,start,2026-03-20T13:49:54+05:30,RQ-IN-01,requester_india,Asia/Kolkata
+A1-C0007,Submit request,complete,2026-03-20T13:52:05+05:30,RQ-IN-01,requester_india,Asia/Kolkata
+A1-C0007,Validate request,schedule,2026-03-20T15:17:33+05:30,SD-IN-07,access_service_desk,Asia/Kolkata
+A1-C0007,Validate request,start,2026-03-20T15:51:43+05:30,SD-IN-07,access_service_desk,Asia/Kolkata
+A1-C0007,Validate request,complete,2026-03-20T15:56:11+05:30,SD-IN-07,access_service_desk,Asia/Kolkata
+A1-C0007,Line manager approval,schedule,2026-03-20T17:03:59+05:30,LM-IN-03,line_management_india,Asia/Kolkata
+A1-C0007,Line manager approval,start,2026-03-23T12:50:44+05:30,LM-IN-03,line_management_india,Asia/Kolkata
+A1-C0007,Line manager approval,complete,2026-03-23T12:53:17+05:30,LM-IN-03,line_management_india,Asia/Kolkata
+A1-C0007,SoD / access-risk check,schedule,2026-03-23T09:39:43+00:00,RC-UK-02,access_risk_controls,Europe/London
+A1-C0007,SoD / access-risk check,start,2026-03-23T09:57:44+00:00,RC-UK-02,access_risk_controls,Europe/London
+A1-C0007,SoD / access-risk check,complete,2026-03-23T10:20:58+00:00,RC-UK-02,access_risk_controls,Europe/London
+A1-C0007,Entitlement owner approval,schedule,2026-03-23T10:01:56-04:00,AO-US-04,application_owners,America/New_York
+A1-C0007,Entitlement owner approval,start,2026-03-24T12:29:14-04:00,AO-US-04,application_owners,America/New_York
+A1-C0007,Entitlement owner approval,complete,2026-03-24T12:36:19-04:00,AO-US-04,application_owners,America/New_York
+A1-C0007,Provision access,schedule,2026-03-25T10:51:40+05:30,IAM-IN-05,iam_engineering,Asia/Kolkata
+A1-C0007,Provision access,start,2026-03-25T12:34:27+05:30,IAM-IN-05,iam_engineering,Asia/Kolkata
+A1-C0007,Provision access,complete,2026-03-25T13:23:57+05:30,IAM-IN-05,iam_engineering,Asia/Kolkata
+A1-C0007,Confirm access works,schedule,2026-03-25T13:49:54+05:30,RQ-IN-01,requester_india,Asia/Kolkata
+A1-C0007,Confirm access works,start,2026-03-25T14:34:48+05:30,RQ-IN-01,requester_india,Asia/Kolkata
+A1-C0007,Confirm access works,complete,2026-03-25T14:44:48+05:30,RQ-IN-01,requester_india,Asia/Kolkata
+A1-C0007,Close request,schedule,2026-03-25T15:29:06+05:30,SD-IN-07,access_service_desk,Asia/Kolkata
+A1-C0007,Close request,start,2026-03-25T15:33:54+05:30,SD-IN-07,access_service_desk,Asia/Kolkata
+A1-C0007,Close request,complete,2026-03-25T15:36:50+05:30,SD-IN-07,access_service_desk,Asia/Kolkata
