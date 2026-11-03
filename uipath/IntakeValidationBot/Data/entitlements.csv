@@ -1,0 +1,14 @@
+entitlement,tier
+market-data-read,standard
+market-data-write,privileged
+order-router-read,standard
+order-router-write,privileged
+risk-warehouse-read,standard
+risk-warehouse-write,privileged
+payments-gateway-deploy,privileged
+settlement-batch-ops,privileged
+customer-data-read,standard
+customer-data-write,privileged
+prod-db-admin,privileged
+secrets-vault-admin,privileged
+ci-pipeline-admin,privileged

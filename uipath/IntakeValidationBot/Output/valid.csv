@@ -1,0 +1,13 @@
+﻿request_id,requester_id,region,entitlement,line_manager_id,justification
+IR-001,USR-IN-101,India,market-data-read,MGR-IN-01,Read access for daily market data reconciliation.
+IR-002,USR-UK-102,UK,order-router-read,MGR-UK-02,Needed to investigate routing exceptions for the desk.
+IR-003,USR-US-103,US East,customer-data-read,MGR-US-03,Customer data lookup for complaint handling cases.
+IR-008,USR-UK-108,UK,risk-warehouse-write,MGR-UK-08,Write access to load approved risk adjustments.
+IR-010,USR-US-110,US East,ci-pipeline-admin,MGR-US-10,Pipeline admin to rotate build agents for release week.
+IR-012,USR-UK-112,UK,customer-data-write,MGR-UK-12,Update customer contact details after verification.
+IR-014,USR-IN-114,India,secrets-vault-admin,MGR-IN-14,Vault admin for certificate renewal on payments gateway.
+IR-015,USR-UK-115,UK,payments-gateway-deploy,MGR-UK-15,Deploy rights for the scheduled gateway patch release.
+IR-017,USR-IN-117,India,risk-warehouse-read,MGR-IN-17,Read access to review limit utilisation reports daily.
+IR-018,USR-UK-118,UK,customer-data-read,MGR-UK-18,Read access to resolve customer data quality tickets.
+IR-019,USR-US-119,US East,settlement-batch-ops,MGR-US-19,Support access for settlement batch monitoring rota.
+IR-020,USR-IN-120,India,order-router-read,MGR-IN-20,Read access for latency analysis of order routing.

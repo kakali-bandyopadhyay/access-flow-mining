@@ -1,0 +1,9 @@
+﻿request_id,requester_id,region,entitlement,line_manager_id,justification,failed_rules
+IR-004,USR-IN-104,India,,MGR-IN-04,Access requested for the quarterly control testing cycle.,R1 required field missing; R2 entitlement not registered
+IR-005,USR-UK-105,UK,risk-warehouse-read,USR-UK-105,Read access to risk warehouse for reporting.,R3 manager is the requester
+IR-006,USR-US-106,US East,prod-db-admin,MGR-US-06,fix,R4 justification under 20 characters
+IR-007,USR-IN-107,India,market-data-writer,MGR-IN-07,Write access to correct reference prices for the desk.,R2 entitlement not registered
+IR-009,USR-UK-108,UK,risk-warehouse-write,MGR-UK-08,Write access to load approved risk adjustments.,R5 duplicate request
+IR-011,USR-IN-111,India,settlement-batch-ops,,Batch operations access for month-end settlement runs.,R1 required field missing
+IR-013,,US East,market-data-read,MGR-US-13,Read access for analytics on market data feeds.,R1 required field missing
+IR-016,USR-US-116,US East,order-router-write,MGR-US-16,short,R4 justification under 20 characters
