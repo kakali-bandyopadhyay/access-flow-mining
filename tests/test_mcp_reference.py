@@ -15,7 +15,7 @@ def _requests():
 
 def test_each_sample_request_resolves_policy_prior_and_conflict_facts():
     requests = _requests()
-    assert len(requests) == 10
+    assert len(requests) == 11  # RQ-011 added after pre-registration (DEVIATIONS)
     for request in requests:
         policy = lookup_policy(request["entitlement"])
         prior = check_prior_approval(request["requester"], request["entitlement"])
@@ -74,7 +74,7 @@ def test_request_expectations_and_support_matrix_are_explicit():
         "RQ-001": "approve", "RQ-002": "escalate", "RQ-003": "approve",
         "RQ-004": "approve", "RQ-005": "approve", "RQ-006": "escalate",
         "RQ-007": "escalate", "RQ-008": "escalate", "RQ-009": "escalate",
-        "RQ-010": "reject",
+        "RQ-010": "reject", "RQ-011": "approve",
     }
     assert {row["id"]: row["expected_recommendation"] for row in requests} == expected
     for row in requests:

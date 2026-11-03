@@ -28,7 +28,7 @@ The hold-removed analysis classifies all four cells correctly; the jitter analys
 
 ## Exception triage gate
 
-`mcp/triage.py` uses the model for a recommendation only; a human gate decides, with one confirmation for standard entitlements and two from different approvers (neither the requester) for privileged ones (RQ-002 and RQ-006 to RQ-010 of the ten samples), refuses unregistered entitlements before any model call, logs every blocked attempt, and executes each request at most once (`tests/test_gate.py`).
+`mcp/triage.py` uses the model for a recommendation only; a human gate decides, with one confirmation for standard entitlements and two from different approvers (neither the requester) for privileged ones (RQ-002 and RQ-006 to RQ-010 of the ten pre-registered samples, plus RQ-011, added later and scored separately), refuses unregistered entitlements before any model call, logs every blocked attempt, and executes each request at most once (`tests/test_gate.py`).
 
 ## Limits
 

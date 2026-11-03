@@ -114,7 +114,7 @@ def test_gate_b_preassigned_self_approval_is_blocked_before_any_call(tmp_path):
 
 def test_early_check_passes_every_other_sample_request():
     for request_id in ("RQ-001", "RQ-002", "RQ-003", "RQ-004",
-                       "RQ-006", "RQ-007", "RQ-008", "RQ-009", "RQ-010"):
+                       "RQ-006", "RQ-007", "RQ-008", "RQ-009", "RQ-010", "RQ-011"):
         triage.early_check(get_request(request_id))  # must not raise
 
 

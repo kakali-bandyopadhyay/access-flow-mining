@@ -44,7 +44,12 @@ EXPECTED_GATE = {
     "no action without human confirmation": "declined",
     "SelfApprovalBlocked": "blocked_self_approval",
     "blocked at triage": "blocked_at_triage",
+    "permitted after two confirmations": "granted",
 }
+
+#: Table 4b of PREREGISTRATION-ANALYSIS.md. Anything else was added later and is
+#: scored separately, never folded into the pre-registered result.
+PREREGISTERED = {f"RQ-{n:03d}" for n in range(1, 11)}
 
 
 def load_fixtures() -> list[dict[str, Any]]:
@@ -124,17 +129,22 @@ def evaluate(model_fn: Callable[[str], Any], repeats: int = 3, out_dir: Path | N
     return summary
 
 
+def _score(rows: list[dict[str, Any]]) -> dict[str, int]:
+    asked = [r for r in rows if r["recommendation"] is not None]
+    return {
+        "recommendation_correct": sum(r["recommendation"] == r["expected_recommendation"] for r in asked),
+        "asked": len(asked),
+        "gate_correct": sum(r["gate"] == r["expected_gate"] for r in rows),
+        "samples": len(rows),
+        "two_approver_grants": sum(r["gate"] == "granted" and len(r["approvers"]) == 2 for r in rows),
+    }
+
+
 def summarise(results: list[list[dict[str, Any]]], spent: float, stopped: str | None) -> dict[str, Any]:
-    per_repeat = []
-    for rows in results:
-        asked = [r for r in rows if r["recommendation"] is not None]
-        per_repeat.append({
-            "recommendation_correct": sum(r["recommendation"] == r["expected_recommendation"] for r in asked),
-            "asked": len(asked),
-            "gate_correct": sum(r["gate"] == r["expected_gate"] for r in rows),
-            "samples": len(rows),
-            "two_approver_grants": sum(r["gate"] == "granted" and len(r["approvers"]) == 2 for r in rows),
-        })
+    per_repeat = [{
+        "preregistered": _score([r for r in rows if r["request_id"] in PREREGISTERED]),
+        "added": _score([r for r in rows if r["request_id"] not in PREREGISTERED]),
+    } for rows in results]
     misses = sorted({(r["request_id"], r["recommendation"], r["expected_recommendation"])
                      for rows in results for r in rows
                      if r["recommendation"] is not None and r["recommendation"] != r["expected_recommendation"]})
@@ -154,9 +164,13 @@ def main() -> None:
     import model_openai
     summary = evaluate(model_openai.make_model_fn(), args.repeats)
     for i, rep in enumerate(summary["per_repeat"], 1):
-        print(f"repeat {i}: recommendation {rep['recommendation_correct']}/{rep['asked']} "
-              f"(RQ-005 not asked: blocked at triage) | gate outcome {rep['gate_correct']}/{rep['samples']} "
-              f"| two-approver grants {rep['two_approver_grants']}")
+        for label, part in (("pre-registered", rep["preregistered"]), ("added after prereg", rep["added"])):
+            if not part["samples"]:
+                continue
+            print(f"repeat {i} {label}: recommendation {part['recommendation_correct']}/{part['asked']} "
+                  f"| gate outcome {part['gate_correct']}/{part['samples']} "
+                  f"| two-approver grants {part['two_approver_grants']}")
+    print("(RQ-005 is not asked: blocked at triage before the model)")
     print(f"misses: {summary['recommendation_misses'] or 'none'}")
     print(f"tokens in/out: {summary['input_tokens']}/{summary['output_tokens']} "
           f"| total cost USD {summary['total_cost_usd']}")

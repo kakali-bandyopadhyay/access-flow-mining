@@ -10,7 +10,7 @@ sys.path.insert(0, str(ROOT / "mcp"))
 import eval_samples
 import triage
 
-PRIVILEGED = {"RQ-002", "RQ-006", "RQ-007", "RQ-008", "RQ-009", "RQ-010"}
+PRIVILEGED = {"RQ-002", "RQ-006", "RQ-007", "RQ-008", "RQ-009", "RQ-010", "RQ-011"}
 
 
 def fake(recommendation, cost=0.0001, prompts=None):
@@ -35,7 +35,8 @@ def test_always_approve_drives_two_approvers_on_every_privileged_sample(tmp_path
         assert rows[rid]["gate"] == "granted"
     assert rows["RQ-001"]["approvers"] == [eval_samples.FIRST]
     assert rows["RQ-004"]["gate"] == "blocked_self_approval"
-    assert summary["per_repeat"][0]["two_approver_grants"] == 6
+    assert summary["per_repeat"][0]["preregistered"]["two_approver_grants"] == 6
+    assert summary["per_repeat"][0]["added"]["two_approver_grants"] == 1
 
 
 def test_rq005_is_blocked_before_the_model(tmp_path):
@@ -44,7 +45,9 @@ def test_rq005_is_blocked_before_the_model(tmp_path):
     rows = rows_by_id(summary["out_dir"])
     assert rows["RQ-005"]["gate"] == "blocked_at_triage"
     assert rows["RQ-005"]["recommendation"] is None
-    assert len(prompts) == 9 and summary["per_repeat"][0]["asked"] == 9
+    assert len(prompts) == 10
+    assert summary["per_repeat"][0]["preregistered"]["asked"] == 9
+    assert summary["per_repeat"][0]["added"]["asked"] == 1
 
 
 def test_always_escalate_grants_nothing_and_scores_the_privileged_misses(tmp_path):
@@ -52,7 +55,7 @@ def test_always_escalate_grants_nothing_and_scores_the_privileged_misses(tmp_pat
     rows = rows_by_id(summary["out_dir"])
     assert all(r["gate"] != "granted" for r in rows.values())
     missed = {m[0] for m in summary["recommendation_misses"]}
-    assert {"RQ-001", "RQ-003", "RQ-004", "RQ-010"} <= missed
+    assert {"RQ-001", "RQ-003", "RQ-004", "RQ-010", "RQ-011"} <= missed
 
 
 def test_fixture_keys_never_reach_a_prompt(tmp_path):
@@ -68,9 +71,22 @@ def test_each_repeat_has_its_own_audit_log(tmp_path):
     for n in (1, 2):
         events = [json.loads(x)["event"] for x in
                   (tmp_path / f"repeat_{n}" / "audit_log.jsonl").read_text(encoding="utf-8").splitlines()]
-        assert events.count("executed") == 8  # RQ-001, RQ-003 + six privileged; RQ-004/005 blocked
+        assert events.count("executed") == 9  # RQ-001, RQ-003 + seven privileged; RQ-004/005 blocked
 
 
 def test_cost_guardrail_stops_the_run(tmp_path):
     summary = eval_samples.evaluate(fake("escalate", cost=0.02), repeats=3, out_dir=tmp_path, max_cost=0.05)
     assert summary["stopped"] and summary["total_cost_usd"] <= 0.05 + 0.02
+
+
+def test_rq011_is_granted_only_after_two_approvers_when_the_model_approves(tmp_path):
+    summary = eval_samples.evaluate(fake("approve"), repeats=1, out_dir=tmp_path)
+    row = rows_by_id(summary["out_dir"])["RQ-011"]
+    assert row["gate"] == "granted" and row["approvers"] == [eval_samples.FIRST, eval_samples.SECOND]
+    assert row["expected_gate"] == "granted"
+
+
+def test_added_samples_are_scored_apart_from_the_preregistered_ten(tmp_path):
+    summary = eval_samples.evaluate(fake("escalate"), repeats=1, out_dir=tmp_path)
+    rep = summary["per_repeat"][0]
+    assert rep["preregistered"]["samples"] == 10 and rep["added"]["samples"] == 1
