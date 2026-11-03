@@ -5,3 +5,8 @@ __pycache__/
 mcp/audit_log.jsonl
 runs/
 *.db
+# UiPath Studio local caches and assistant files
+uipath/**/.local/
+uipath/**/.tmh/
+uipath/**/AGENTS.md
+uipath/**/CLAUDE.md
