@@ -1,0 +1,57 @@
+{
+  "synthetic": true,
+  "exploratory": true,
+  "added_after_preregistration": true,
+  "discovered_model_fitness_note": "Discovered fitness is near 1.0 because noise_threshold=0.0 retains observed variants when the model is induced from the same log.",
+  "pm4py_version": "2.7.23.11",
+  "cells": {
+    "A1": {
+      "designed_model": {
+        "log_fitness": 0.9907427474534816,
+        "fitting_traces_share": 0.9445
+      },
+      "discovered_model": {
+        "log_fitness": 0.9999747273976929,
+        "fitting_traces_share": 1.0,
+        "precision": 0.9932957239800507
+      },
+      "pandas_exact_path_conformance_rate": 0.9445
+    },
+    "A2": {
+      "designed_model": {
+        "log_fitness": 0.9637393085170461,
+        "fitting_traces_share": 0.774
+      },
+      "discovered_model": {
+        "log_fitness": 0.9999739796655905,
+        "fitting_traces_share": 1.0,
+        "precision": 0.9813496362792138
+      },
+      "pandas_exact_path_conformance_rate": 0.774
+    },
+    "B1": {
+      "designed_model": {
+        "log_fitness": 0.9907120743034056,
+        "fitting_traces_share": 0.9434999999999999
+      },
+      "discovered_model": {
+        "log_fitness": 0.9999747219883098,
+        "fitting_traces_share": 1.0,
+        "precision": 0.9931739219292868
+      },
+      "pandas_exact_path_conformance_rate": 0.9435
+    },
+    "B2": {
+      "designed_model": {
+        "log_fitness": 0.963159162051529,
+        "fitting_traces_share": 0.7709999999999999
+      },
+      "discovered_model": {
+        "log_fitness": 0.9999739531915918,
+        "fitting_traces_share": 1.0,
+        "precision": 0.9824561403508771
+      },
+      "pandas_exact_path_conformance_rate": 0.771
+    }
+  }
+}

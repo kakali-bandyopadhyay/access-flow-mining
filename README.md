@@ -45,4 +45,4 @@ Each run writes `mcp/runs/<UTC stamp>/` (git-ignored): one audit log per repeat 
 
 The model uses fixed queue parameters rather than staffing capacity, a sequential path, at most two rework loops, weekends but no public holidays, and one process represented by four parameter scenarios. The hold reinforces the planted owner signal by design. See `CASE_STUDY.md` and Part B §9 of the pre-registration for the full limitations.
 
-PM4Py used: no. Variants are computed with pandas.
+PM4Py used: yes, as an exploratory cross-check only (`analysis/pm4py_crosscheck.py`: Inductive Miner discovery and alignment-based conformance). The pre-registered analysis uses pandas. PM4Py is an optional dependency (`requirements-optional.txt`, AGPL-3.0 licence); it is imported only by the cross-check script.

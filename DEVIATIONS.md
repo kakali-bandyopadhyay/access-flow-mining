@@ -33,3 +33,8 @@
 - Issue: rule v1.1 said an expired or incomplete approval, a conflict, a duplicate or a privileged request without approval "is 'escalate' or 'reject'", so it allowed either outcome. Run `20261103T081934Z` (rules v1.1, gpt-5.4-mini-2026-03-17, 3 repeats) returned 'reject' for RQ-007 (SoD conflict, expected 'escalate') in one repeat: pre-registered ten 26/27 recommendations, 30/30 gate outcomes; RQ-011 3/3 and 3/3. The gate outcome was correct in every case (no grant).
 - Change: each condition now maps to one outcome - 'reject' only for a duplicate; 'escalate' for expired or incomplete approval, a conflict, or a privileged request without a live, complete approval; 'approve' otherwise as before; precedence reject > escalate > approve. Checked against all eleven fixtures; no fixture changed.
 - Effect: v1.1 results stand as reported and are not replaced. v2 runs are reported separately, labelled by `rules_version`.
+
+## 2026-11-03 - PM4Py cross-check added after pre-registration
+- Where: `analysis/pm4py_crosscheck.py`, `analysis/results/pm4py_crosscheck.json`, `lean/as_is_discovered_A2.bpmn`. The pre-registered analysis (Part A) uses pandas; PM4Py was optional in the build brief and not used in the original run.
+- Change: added an exploratory cross-check with PM4Py 2.7.23.11 - Inductive Miner (noise threshold 0) discovery per cell, alignment-based fitness against the designed 8-step path, and precision of the discovered model.
+- Effect: none on the pre-registered result. The share of fitting traces against the designed path equals the pandas exact-path conformance rate in all four cells (0.9445, 0.774, 0.9435, 0.771).
